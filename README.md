@@ -1,24 +1,11 @@
-# README
+# Commitment Ledger
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the application I'll be creating for my Capstone project with Actualize.
 
-Things you may want to cover:
+It's core focus to help you protect your commitments. It does this by helping you track when, who and what you've committed to.
 
-* Ruby version
+This will help you fulfill your commitments and mangage your time so you are less likely to break promises you have with people or yourself!
 
-* System dependencies
+Feel free to reach out if you have questions, concerns or advice!
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+-Robert Rosenberg
