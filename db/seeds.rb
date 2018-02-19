@@ -17,6 +17,15 @@ User.create(
   }
 )
 
+Category.create([
+  {
+    title: "Personal"
+  },
+  {
+    title: "Work"
+  }
+])
+
 Commitment.create(
   {
     what: "Finish my capstone project",
