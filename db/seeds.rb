@@ -26,12 +26,23 @@ Category.create([
   }
 ])
 
-Commitment.create(
+Commitment.create([
   {
     what: "Finish my capstone project",
     who: "myself",
     when: "2018-03-29 21:30:00",
     status: "Committed",
-    notes: "I'm commiting myself to making this commitment app so that I fullfill my commitment on helping other commit to their commitments :)"
+    notes: "I'm commiting myself to making this commitment app so that I fullfill my commitment on helping other commit to their commitments :)",
+    user_id: 1,
+    category_id: 2
+  },
+  {
+    what: "Call my parents once a week",
+    who: "Mom and Dad",
+    when: "",
+    status: "Committed",
+    notes: "Keep in better touch with my parents, to make them happy!",
+    user_id: 1,
+    category_id: 2
   }
-)
+])
