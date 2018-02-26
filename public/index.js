@@ -91,7 +91,16 @@ var CommitmentsPage = {
   data: function() {
     return {
       message: "All Your Commitments",
-      commitments: []
+      commitments: [],
+      newCommitment: {
+        what: "",
+        who: "",
+        due: "",
+        notes: "",
+        category_id: "",
+
+      },
+      errors: []
     };
   },
   created: function() {
@@ -100,7 +109,24 @@ var CommitmentsPage = {
       console.log(response.data);
     }.bind(this));
   },
-  methods: {},
+  methods: {
+    addCommitment: function(){
+      var params = {
+        
+        what: this.newCommitment.what,
+        who: this.newCommitment.who,
+        due: this.newCommitment.due,
+        notes: this.newCommitment.notes,
+        category_id: this.newCommitment.category_id
+      };
+      axios.post("/commitments", params).then(function(response){
+        console.log(response.data);
+        this.commitments.push(response.data);
+      }).catch(function(error){
+        this.errors = error.response.data.errors;
+      }.bind(this));
+    }
+  },
   computed: {}
 };
 

@@ -18,7 +18,7 @@ class CommitmentsController < ApplicationController
       user_id: current_user.id
     )
     if commitment.save
-      render json: commitmentt.as_json
+      render json: commitment.as_json
     else
       render json: {errors: commitment.errors.full_messages}, status: :bad_request
     end
