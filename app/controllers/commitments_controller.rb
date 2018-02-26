@@ -1,15 +1,17 @@
 class CommitmentsController < ApplicationController
 
   def index
-    commitments = Commitment.all
-    render json: commitments.as_json  
+    if current_user
+      commitments = current_user.commitments
+      render json: commitments.as_json
+    end
   end
 
   def create
     commitment = Commitment.new(
       what: params[:what],
       who: params[:who],
-      when: params[:when],
+      due: params[:due],
       status: "Created",
       notes: params[:notes],
       category_id: params[:category_id],
@@ -26,7 +28,7 @@ class CommitmentsController < ApplicationController
     commitment = Commitment.find_by(id: params[:id])
     commitment.what = params[:what] || commitment.what
     commitment.who = params[:who] || commitment.who
-    commitment.when = params[:when] || commitment.when
+    commitment.due = params[:due] || commitment.due
     commitment.status = params[:status] || commitment.status
     commitment.notes = params[:notes] || commitment.notes
     commitment.category_id = params[:category_id] || commitment.category_id
