@@ -147,7 +147,7 @@
         <p>Notes: {{commitment.notes}}</p>
         <p>Status: {{commitment.status}}</p>
         <p>Category: {{commitment.category.title}}</p>
-
+        <button v-on:click="deleteCommitment(commitment)">Delete</button>
       </div>
 
       

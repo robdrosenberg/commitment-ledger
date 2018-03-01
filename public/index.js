@@ -130,6 +130,14 @@ var CommitmentsPage = {
       }.bind(this)).catch(function(error){
         this.errors = error.response.data.errors;
       }.bind(this));
+    },
+    deleteCommitment: function(commitment){
+      var id = commitment.id;
+      console.log("deleted " + id);
+      axios.delete("/commitments/"+ id).then(function(response){
+        var index = this.commitments.indexOf(commitment);
+        this.commitments.splice(index,1);
+      }.bind(this));
     }
   },
   computed: {}
