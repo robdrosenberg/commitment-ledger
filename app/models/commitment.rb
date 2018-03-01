@@ -10,7 +10,9 @@ class Commitment < ApplicationRecord
       who: who,
       what: what,
       due: due,
+      notes: notes,
       status: status,
+      category_id: category_id,
       category: category.as_json,
       user_id: user_id
 

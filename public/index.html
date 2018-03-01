@@ -148,11 +148,12 @@
         <p>Status: {{commitment.status}}</p>
         <p>Category: {{commitment.category.title}}</p>
         <button v-on:click="deleteCommitment(commitment)">Delete</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">Update</button>
       </div>
 
       
 
-      <!-- Modal -->
+      <!-- Create Modal -->
       <div class="modal fade" id="createCommitmentModal" tabindex="-1" role="dialog" aria-labelledby="createCommitmentModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
@@ -195,7 +196,57 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" v-on:click="addCommitment()">Save</button>
+              <button type="button" class="btn btn-primary" v-on:click="addCommitment()" data-dismiss="modal" >Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- UPDATE MODAL -->
+      <div class="modal fade" id="updateCommitmentModal" tabindex="-1" role="dialog" aria-labelledby="updateCommitmentModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateCommitmentModalLongTitle">Update Commitment</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="what">What:</label>
+                  <input v-model="currentCommitment.what" id="what" type="text" class="form-control">
+                </div>
+        
+                <div class="form-group">
+                  <label for="who">Who:</label>
+                  <input v-model="currentCommitment.who" id="who" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="due">Due:</label>
+                  <input v-model="currentCommitment.due" id="due" type="datetime-local" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="notes">Notes:</label>
+                  <textarea v-model="currentCommitment.notes" id="notes" type="text" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="category_id">Category ID:</label>
+                  <select v-model="currentCommitment.category_id" id="category_id" type="text" class="form-control">
+                    <option value="1">Personal</option>
+                    <option value="2">Work</option>
+                  </select>
+                </div>
+                <div v-for="error in errors">
+                  <p>{{ error }}</p>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" v-on:click="updateCommitment(currentCommitment)">Update</button>
             </div>
           </div>
         </div>

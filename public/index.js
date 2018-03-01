@@ -100,6 +100,7 @@ var CommitmentsPage = {
         category_id: "",
 
       },
+      currentCommitment: {},
       errors: []
     };
   },
@@ -137,6 +138,28 @@ var CommitmentsPage = {
       axios.delete("/commitments/"+ id).then(function(response){
         var index = this.commitments.indexOf(commitment);
         this.commitments.splice(index,1);
+      }.bind(this));
+    },
+    setCurrentCommitment: function(commitment){
+      this.currentCommitment = commitment;
+      var dateControl = document.querySelector('input[type="datetime-local"]');
+      dateControl.value = this.currentCommitment.due;
+      console.log(commitment)
+      console.log(this.currentCommitment);
+    },
+    updateCommitment: function(commitment){
+      var params = {
+        what: this.currentCommitment.what,
+        who: this.currentCommitment.who,
+        due: this.currentCommitment.due,
+        notes: this.currentCommitment.notes,
+        category_id: this.currentCommitment.category_id
+      };
+      axios.put("/commitments/:" + this.commitment.id, params).then(function(response){
+        this.commitments.push(response.data);
+      }.bind(this)).catch(function(error){
+        this.errors = error.response.data.errors;
+        console.log(this.errors);
       }.bind(this));
     }
   },
