@@ -133,6 +133,12 @@
   <div class="vue-component">
     <div class="container">
       <h1>{{message}}</h1>
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCommitmentModal">
+        Create Commitment
+      </button>
+
       <div v-for="commitment in commitments">
         <br>
         <h4>{{commitment.what}}</h4>
@@ -144,10 +150,7 @@
 
       </div>
 
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCommitmentModal">
-        Create Commitment
-      </button>
+      
 
       <!-- Modal -->
       <div class="modal fade" id="createCommitmentModal" tabindex="-1" role="dialog" aria-labelledby="createCommitmentModalCenterTitle" aria-hidden="true">
@@ -172,15 +175,21 @@
                 </div>
                 <div class="form-group">
                   <label for="due">Due:</label>
-                  <input v-model="newCommitment.due" id="due" type="text" class="form-control">
+                  <input v-model="newCommitment.due" id="due" type="datetime-local" class="form-control">
                 </div>
                 <div class="form-group">
                   <label for="notes">Notes:</label>
-                  <input v-model="newCommitment.notes" id="notes" type="text" class="form-control">
+                  <textarea v-model="newCommitment.notes" id="notes" type="text" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                   <label for="category_id">Category ID:</label>
-                  <input v-model="newCommitment.category_id" id="category_id" type="text" class="form-control">
+                  <select v-model="newCommitment.category_id" id="category_id" type="text" class="form-control">
+                    <option value="1">Personal</option>
+                    <option value="2">Work</option>
+                  </select>
+                </div>
+                <div v-for="error in errors">
+                  <p>{{ error }}</p>
                 </div>
               </form>
             </div>

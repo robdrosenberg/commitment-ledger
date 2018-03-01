@@ -2,6 +2,8 @@ class Commitment < ApplicationRecord
   belongs_to :user
   belongs_to :category, optional: true
 
+  validates :what, presence: true
+
   def as_json
     {
       id: id,

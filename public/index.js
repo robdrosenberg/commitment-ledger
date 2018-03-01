@@ -122,7 +122,12 @@ var CommitmentsPage = {
       axios.post("/commitments", params).then(function(response){
         console.log(response.data);
         this.commitments.push(response.data);
-      }).catch(function(error){
+        this.newCommitment.what = "";
+        this.newCommitment.who = "";
+        this.newCommitment.due = "";
+        this.newCommitment.notes = "";
+        this.newCommitment.category_id = "";
+      }.bind(this)).catch(function(error){
         this.errors = error.response.data.errors;
       }.bind(this));
     }
