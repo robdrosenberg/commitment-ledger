@@ -65,7 +65,7 @@ var LoginPage = {
           axios.defaults.headers.common["Authorization"] =
             "Bearer " + response.data.jwt;
           localStorage.setItem("jwt", response.data.jwt);
-          router.push("/");
+          router.push("/commitments");
         })
         .catch(
           function(error) {
@@ -145,7 +145,7 @@ var CommitmentsPage = {
       var dateControl = document.querySelector('input[type="datetime-local"]');
       dateControl.value = this.currentCommitment.due;
       console.log(commitment)
-      console.log(this.currentCommitment);
+      console.log(this.currentCommitment.id);
     },
     updateCommitment: function(commitment){
       var params = {
@@ -155,9 +155,12 @@ var CommitmentsPage = {
         notes: this.currentCommitment.notes,
         category_id: this.currentCommitment.category_id
       };
-      axios.put("/commitments/:" + this.commitment.id, params).then(function(response){
-        this.commitments.push(response.data);
-      }.bind(this)).catch(function(error){
+      console.log(params)
+      axios.put("/commitments/" + commitment.id, params).then(function(response){
+        console.log(currentCommitment);
+        console.log(response.data)
+        // this.commitments.push(response.data);
+      }).catch(function(error){
         this.errors = error.response.data.errors;
         console.log(this.errors);
       }.bind(this));
@@ -172,7 +175,8 @@ var router = new VueRouter({
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage},
-    { path: "/commitments", component: CommitmentsPage}
+    { path: "/commitments", component: CommitmentsPage},
+    // { path: "/commitments/:id/edit", component: CommitmentsPage}
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };
