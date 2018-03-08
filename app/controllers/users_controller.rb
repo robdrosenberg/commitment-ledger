@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.find_by(id: params[:id])
+    user = User.find_by(id: current_user.id)
     render json: user.as_json
   end
 
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     user.bio = params[:bio] || user.bio
     user.profile_picture = params[:profile_picture] || user.profile_picture
     if user.save
-      render json: photo.as_json
+      render json: user.as_json
     else
       render json: {erroes: user.errors.full_messages}, status: :bad_request
     end

@@ -4,10 +4,12 @@ Rails.application.routes.draw do
 
   #User routes show, create, update, delete
   post 'user_token' => 'user_token#create'
-  get "/users/:id" => "users#show"
+  # get "/users/:id" => "users#show"
   post "/users" => "users#create"
   put "/users/:id" => "users#update"
   delete "/users/:id" => "users#destroy"
+  get "/profile" => "users#show"
+
 
   #Commitment routes index, create, update, destroy
   get "/commitments" => "commitments#index"

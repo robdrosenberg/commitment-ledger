@@ -169,6 +169,49 @@ var CommitmentsPage = {
   computed: {}
 };
 
+var ProfilePage = {
+  template: "#profile-page",
+  data: function() {
+    return {
+      message: "Your Profile",
+      user: {},
+      errors: []
+    };
+  },
+  created: function() {
+    axios.get("/profile").then(function(response){
+      this.user = response.data;
+    }.bind(this));
+  },
+  methods: {
+    deleteUser: function(){
+      var id = this.user.id;
+      axios.delete("/users/" +id).then(function(response){
+        router.push("/");
+      }.bind(this)).catch(function(error){
+        this.errors = error.response.data.errors;
+      }.bind(this));
+    },
+    updateUser: function(user){
+      var params = {
+        first_name: this.user.first_name,
+        last_name: this.user.last_name,
+        user_name: this.user.user_name,
+        email: this.user.email,
+        bio: this.user.bio,
+        profile_picture: this.user.profile_picture
+      };
+      console.log(params);
+      axios.put("/users/" + this.user.id, params).then(function(response){
+        console.log(response.data);
+      }.bind(this)).catch(function(error){
+        this.errors = error.response.data.errors;
+      }.bind(this));
+    }
+  },
+  computed: {}
+};
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
@@ -176,6 +219,8 @@ var router = new VueRouter({
     { path: "/login", component: LoginPage },
     { path: "/logout", component: LogoutPage},
     { path: "/commitments", component: CommitmentsPage},
+    { path: "/profile", component: ProfilePage},
+
     // { path: "/commitments/:id/edit", component: CommitmentsPage}
   ],
   scrollBehavior: function(to, from, savedPosition) {
@@ -188,6 +233,7 @@ var app = new Vue({
   router: router,
   created: function() {
     var jwt = localStorage.getItem("jwt");
+    console.log(jwt);
     if (jwt) {
       axios.defaults.headers.common["Authorization"] = jwt;
     }

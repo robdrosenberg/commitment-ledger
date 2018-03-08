@@ -20,6 +20,8 @@ gem 'puma', '~> 3.7'
 gem 'bcrypt', '~> 3.1.7'
 gem 'knock'
 gem 'seed_dump'
+gem 'pry-rails'
+gem "paperclip", "~> 5.1"
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

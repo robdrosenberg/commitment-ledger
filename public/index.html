@@ -37,6 +37,7 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="/#/signup">Sign Up</a>
                 <a class="dropdown-item" href="/#/login">Login</a>
+                <a href="/#/profile" class="dropdown-item">Profile</a>
                 <a class="dropdown-item" href="/#/logout">Logout</a>
               </div>
             </li>
@@ -256,3 +257,94 @@
   </div>
 </template>
 
+<template id="profile-page">
+  <div class="vue-component">
+    <div class="container">
+      <h1>{{message}}</h1>
+      <h4>Picture:</h4><img :src="user.profile_picture" alt="">
+      <h4>First Name: {{user.first_name}}</h4>
+      <h4>Last Name: {{user.last_name}}</h4>
+      <h4>Email:{{user.email}}</h4>
+      <h4>Bio: {{user.bio}}</h4>
+
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
+        Update
+      </button>
+      <br>
+      <br>
+      <button v-on:click="deleteUser()">Delete</button>
+
+      <!--UPDATE USER MODAL -->
+      <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updateModalLongTitle">{{user.first_name}} {{user.last_name}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
+                    <label>First Name</label> 
+                    <input type="text" class="form-control" v-model="user.first_name">
+                  </div>
+                  <div class="col">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" v-model="user.last_name">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <div class="col">
+                    <label>User Name:</label>
+                    <input type="text" class="form-control" v-model="user.user_name">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <div class="col">
+                    <label>Email:</label>
+                    <input type="email" class="form-control" v-model="user.email">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <div class="col">
+                    <label>Bio:</label>
+                    <input type="textarea" class="form-control" v-model="user.bio">     
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <div class="col">
+                    <label>Profile Picture:</label>
+                    <input type="text" class="form-control" v-model="user.profile_picture">     
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <ul>
+                    <li v-for="error in errors">{{error}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updateUser(user)">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
