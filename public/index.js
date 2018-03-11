@@ -207,6 +207,19 @@ var ProfilePage = {
       }.bind(this)).catch(function(error){
         this.errors = error.response.data.errors;
       }.bind(this));
+    },
+    uploadFile: function(event){
+      if (event.target.files.length>0) {
+        var formData = new FormData();
+        formData.append("avatar", event.target.files[0]);
+        axios.put("/users/" + this.user.id, formData).then(function(response){
+          console.log(response);
+          event.target.value = "";
+        }.bind(this)).catch(function(error){
+          this.errors = error.response.data.errors;
+          console.log(this.errors)
+        });
+      }
     }
   },
   computed: {}

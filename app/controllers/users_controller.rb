@@ -8,7 +8,8 @@ class UsersController < ApplicationController
       first_name: params[:first_name],
       last_name: params[:last_name],
       bio: params[:bio],
-      profile_picture: params[:profile_picture]
+      profile_picture: params[:profile_picture],
+      avatar: parmas[:avatar]
     )
     if user.save
       render json: {message: "User created succesfully"}, status: :created
@@ -18,7 +19,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    user = User.find_by(id: current_user.id)
+    if current_user
+      user = User.find_by(id: current_user.id)
+    else
+      user = User.find_by(id: params[:id])
+    end
     render json: user.as_json
   end
 
@@ -30,6 +35,7 @@ class UsersController < ApplicationController
     user.last_name = params[:last_name] || user.last_name
     user.bio = params[:bio] || user.bio
     user.profile_picture = params[:profile_picture] || user.profile_picture
+    user.avatar = params[:avatar] || user.avatar
     if user.save
       render json: user.as_json
     else

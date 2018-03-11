@@ -261,15 +261,36 @@
   <div class="vue-component">
     <div class="container">
       <h1>{{message}}</h1>
-      <h4>Picture:</h4><img :src="user.profile_picture" alt="">
-      <h4>First Name: {{user.first_name}}</h4>
-      <h4>Last Name: {{user.last_name}}</h4>
-      <h4>Email:{{user.email}}</h4>
-      <h4>Bio: {{user.bio}}</h4>
+      <!-- <h4>Picture:</h4><img :src="user.profile_picture" alt=""> -->
+     
+      <div class="row">
+   
+        <div class="col">
+          <h4>Avatar:</h4><img :src="user.avatar" alt="">
+          <div class="row">
+            <div class="form-group">
+              <div class="col">
+                <label>Avatar:</label>
+                <input type="file" class="form-control" v-on:change="uploadFile($event)">     
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <br><br>
+          <h4>First Name: {{user.first_name}}</h4>
+          <h4>Last Name: {{user.last_name}}</h4>
+          <h4>Email:{{user.email}}</h4>
+          <h4>Bio: {{user.bio}}</h4>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
+          Update
+          </button>
+        </div>
+      </div>
+      
 
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateModal">
-        Update
-      </button>
+      
+      
       <br>
       <br>
       <button v-on:click="deleteUser()">Delete</button>
