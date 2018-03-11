@@ -101,6 +101,7 @@ var CommitmentsPage = {
 
       },
       currentCommitment: {},
+      categoryFilter: "",
       errors: []
     };
   },
@@ -153,6 +154,7 @@ var CommitmentsPage = {
         who: this.currentCommitment.who,
         due: this.currentCommitment.due,
         notes: this.currentCommitment.notes,
+        status: this.currentCommitment.status,
         category_id: this.currentCommitment.category_id
       };
       console.log(params)
@@ -164,6 +166,14 @@ var CommitmentsPage = {
         this.errors = error.response.data.errors;
         console.log(this.errors);
       }.bind(this));
+    },
+
+    categoryCommitments: function(commitment){
+      if (this.categoryFilter == "") {
+        return true;
+      } else{
+        return (commitment.category_id == this.categoryFilter);
+      }
     }
   },
   computed: {}
@@ -246,7 +256,7 @@ var app = new Vue({
   router: router,
   created: function() {
     var jwt = localStorage.getItem("jwt");
-    console.log(jwt);
+    // console.log(jwt);
     if (jwt) {
       axios.defaults.headers.common["Authorization"] = jwt;
     }
