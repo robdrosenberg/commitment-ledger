@@ -1,3 +1,5 @@
+/* global Vue, VueRouter, axios */
+
 var HomePage = {
   template: "#home-page",
   data: function() {
@@ -109,6 +111,8 @@ var CommitmentsPage = {
     axios.get("/commitments").then(function(response){
       this.commitments = response.data;
       console.log(response.data);
+      var now = moment();
+      console.log(now);
     }.bind(this));
   },
   methods: {
@@ -143,9 +147,8 @@ var CommitmentsPage = {
     },
     setCurrentCommitment: function(commitment){
       this.currentCommitment = commitment;
-      var dateControl = document.querySelector('input[type="datetime-local"]');
-      dateControl.value = this.currentCommitment.due;
       console.log(commitment)
+      console.log(commitment.due)
       console.log(this.currentCommitment.id);
     },
     updateCommitment: function(commitment){
@@ -176,7 +179,11 @@ var CommitmentsPage = {
       }
     }
   },
-  computed: {}
+  computed: {
+    sortedCommitments: function(){
+      
+    }
+  }
 };
 
 var ProfilePage = {

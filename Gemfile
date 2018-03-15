@@ -22,6 +22,7 @@ gem 'knock'
 gem 'seed_dump'
 gem 'pry-rails'
 gem "paperclip", "~> 5.1"
+gem 'momentjs-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment-with-locales.min.js"></script>
     <script src="index.js" defer></script>
 
     <title>Commitment Ledger</title>
@@ -148,17 +149,51 @@
           <option value="2">Work</option>
         </select>
       </div>
-
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <p v-on:click="setSortAttribute()"><strong>What</strong></p>
+          </div>
+          <div class="col-md-2">
+            <p><strong>Who</strong></p>
+          </div>
+          <div class="col-md-2">
+            <p><strong>Due</strong></p>
+          </div>
+          <div class="col-md-2">
+            <p><strong>Category</strong></p>
+          </div>
+        </div>
+      </div>
       <div v-for="commitment in commitments" v-if="categoryCommitments(commitment)">
         <br>
-        <h4>{{commitment.what}}</h4>
+        <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <p>{{commitment.what}}</p>
+          </div>
+          <div class="col-md-2">
+            <p>{{commitment.who}}</p>
+          </div>
+          <div class="col-md-2">
+            <p>{{commitment.due}}</p>
+          </div>
+          <div class="col-md-2">
+            <p>{{commitment.category.title}}</p>
+          </div>
+        </div>
+      </div>
+        <!-- <h4>{{commitment.what}}</h4>
         <p>For: {{commitment.who}}</p>
         <p>Due: {{commitment.due}}</p>
-        <p>Notes: {{commitment.notes}}</p>
-        <p>Status: {{commitment.status}}</p>
-        <p>Category: {{commitment.category.title}}</p>
-        <button v-on:click="deleteCommitment(commitment)">Delete</button>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">Update</button>
+        <p>Notes: {{commitment.notes}}</p> -->
+        <!-- <p>Status: {{commitment.status}}</p> -->
+       <!--  <p>Category: {{commitment.category.title}}</p> -->
+        <div class="container">
+          <button class="btn btn-secondary btn-small" v-on:click="deleteCommitment(commitment)">Delete</button>
+          <button type="button" class="btn btn-primary btn-small" data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">Update</button>
+        </div>
       </div>
 
       
