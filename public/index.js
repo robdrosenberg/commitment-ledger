@@ -196,6 +196,22 @@ var CommitmentsPage = {
       this.statusFilter = "";
     },
 
+    setCategoryFilter: function(attribute){
+      if (attribute == this.categoryFilter) {
+        this.categoryFilter = "";
+      } else {
+        this.categoryFilter = attribute;
+      }
+    },
+
+    setStatusFilter: function(attribute){
+      if (attribute == this.statusFilter) {
+        this.statusFilter = "";
+      } else {
+        this.statusFilter = attribute;
+      }
+    },
+
     filterCommitments: function(commitment){
       if (this.categoryFilter == "" && this.statusFilter == "") {
         return true;

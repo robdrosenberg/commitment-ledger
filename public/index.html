@@ -150,11 +150,11 @@
       <br>
       <div class="form-group">
         <button class="btn btn-primary" v-on:click="clearFilters()">All</button>
-        <button class="btn btn-primary" v-on:click="categoryFilter = '1'">Personal</button>
-        <button class="btn btn-primary" v-on:click="categoryFilter = '2'">Work</button>
-        <button class="btn btn-primary" v-on:click="statusFilter = 'Committed'">Committed</button>
-        <button class="btn btn-primary" v-on:click="statusFilter = 'Complete'">Complete</button>
-        <button class="btn btn-primary" v-on:click="statusFilter = 'Broken'">Broken</button>
+        <button class="btn btn-primary" data-toggle="button" v-on:click="setCategoryFilter('1')">Personal</button>
+        <button class="btn btn-primary" v-on:click="setCategoryFilter('2')">Work</button>
+        <button class="btn btn-primary" v-on:click="setStatusFilter('Committed')">Committed</button>
+        <button class="btn btn-primary" v-on:click="setStatusFilter('Complete')">Complete</button>
+        <button class="btn btn-primary" v-on:click="setStatusFilter('Broken')">Broken</button>
 
         <!-- <label for="category_filter">Category Filter</label> -->
         <!-- <select v-model="categoryFilter" id="category_filter" class="form-control">
