@@ -136,6 +136,12 @@
     <div class="container">
       <h1>{{message}}</h1>
 
+      <p>{{commitmentCount}}</p>
+
+      <div class="alert alert-warning" role="alert" v-if="showWarning == true">
+        This is a info alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+      </div>
+
       <!-- Button trigger modal -->
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCommitmentModal">
         Create Commitment
@@ -143,9 +149,13 @@
       <br>
       <br>
       <div class="form-group">
-        <button class="btn btn-primary" v-on:click="categoryFilter = ''">All</button>
+        <button class="btn btn-primary" v-on:click="clearFilters()">All</button>
         <button class="btn btn-primary" v-on:click="categoryFilter = '1'">Personal</button>
         <button class="btn btn-primary" v-on:click="categoryFilter = '2'">Work</button>
+        <button class="btn btn-primary" v-on:click="statusFilter = 'Committed'">Committed</button>
+        <button class="btn btn-primary" v-on:click="statusFilter = 'Complete'">Complete</button>
+        <button class="btn btn-primary" v-on:click="statusFilter = 'Broken'">Broken</button>
+
         <!-- <label for="category_filter">Category Filter</label> -->
         <!-- <select v-model="categoryFilter" id="category_filter" class="form-control">
           <option value="">All</option>
@@ -166,11 +176,14 @@
             <p v-on:click="setSortAttribute('due')"><strong>Due</strong> <span v-if="sortAttribute == 'due'">{{sortIcon}}</span> </p>
           </div>
           <div class="col-md-2">
+            <p v-on:click="setSortAttribute('status')"><strong>Status</strong> <span v-if="sortAttribute == 'status'">{{sortIcon}}</span> </p>
+          </div>
+          <div class="col-md-2">
             <p><strong>Category</strong></p>
           </div>
         </div>
       </div>
-      <div v-for="commitment in sortedCommitments" v-if="categoryCommitments(commitment)">
+      <div v-for="commitment in sortedCommitments" v-show="filterCommitments(commitment)">
         <br>
         <div class="container">
         <div class="row">
@@ -182,6 +195,9 @@
           </div>
           <div class="col-md-2">
             <p>{{commitment.due}}</p>
+          </div>
+          <div class="col-md-2">
+            <p>{{commitment.status}}</p>
           </div>
           <div class="col-md-2">
             <p>{{commitment.category.title}}</p>
@@ -245,7 +261,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" v-on:click="addCommitment()" data-dismiss="modal" >Save</button>
+              <button type="button" class="btn btn-primary" v-on:click="addCommitment()">Save</button>
             </div>
           </div>
         </div>
@@ -285,8 +301,9 @@
                 <div class="form-group">
                   <label for="status">Status:</label>
                   <select v-model="currentCommitment.status" id="status" class="form-control">
-                    <option value="Created">Created</option>
-                    <option value="Committed">Comitted</option>
+                    
+                    <option value="Committed">Committed</option>
+                    <option value="Complete">Complete</option>
                     <option value="Broken">Broken</option>
                   </select>
                 </div>

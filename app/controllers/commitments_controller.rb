@@ -12,7 +12,7 @@ class CommitmentsController < ApplicationController
       what: params[:what],
       who: params[:who],
       due: params[:due],
-      status: "Created",
+      status: "Committed",
       notes: params[:notes],
       category_id: params[:category_id],
       user_id: current_user.id

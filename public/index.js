@@ -103,10 +103,13 @@ var CommitmentsPage = {
 
       },
       currentCommitment: {},
+      statusFilter: "",
       categoryFilter: "",
       sortAttribute: "what",
       sortAscending: true,
       sortIcon: "",
+      countCommitments: 0,
+      showWarning: false,
       errors: []
     };
   },
@@ -114,6 +117,14 @@ var CommitmentsPage = {
     axios.get("/commitments").then(function(response){
       this.commitments = response.data;
       console.log(response.data);
+      var count = 0;
+      this.commitments.forEach(function(commitment){
+        if (commitment.status == "Committed"){
+          count++;
+        }
+      }.bind(this));
+      this.countCommitments = count;
+      console.log(this.countCommitments);
     }.bind(this));
   },
   methods: {
@@ -172,12 +183,35 @@ var CommitmentsPage = {
       }.bind(this));
     },
 
-    categoryCommitments: function(commitment){
-      if (this.categoryFilter == "") {
+    // statusCommitments: function(commitment){
+    //   if (this.statusFilter == ""){
+    //     return true;
+    //   } else {
+    //     return (commitment.status == this.statusFilter);
+    //   }
+    // },
+
+    clearFilters: function(){
+      this.categoryFilter = "";
+      this.statusFilter = "";
+    },
+
+    filterCommitments: function(commitment){
+      if (this.categoryFilter == "" && this.statusFilter == "") {
         return true;
       } else{
-        return (commitment.category_id == this.categoryFilter);
-      }
+        console.log(this.statusFilter);
+        if (this.categoryFilter && this.statusFilter){
+          return commitment.category_id == this.categoryFilter && commitment.status == this.statusFilter;
+        } 
+        else if (this.categoryFilter) {
+          this.statusFilter = "";
+          return commitment.category_id == this.categoryFilter;  
+        } else if (this.statusFilter){
+          this.categoryFilter = "";
+          return commitment.status == this.statusFilter;
+        } 
+      } //
     },
 
     setSortAttribute: function(attribute){
@@ -193,10 +227,10 @@ var CommitmentsPage = {
   computed: {
     sortedCommitments: function(){
       return this.commitments.sort(function(commitment1, commitment2){
-        if (this.sortAscending && (this.sortAttribute == "what" || this.sortAttribute == "who")){
+        if (this.sortAscending && (this.sortAttribute == "what" || this.sortAttribute == "who" || this.sortAttribute == "status")){
           this.sortIcon = "^";
           return commitment1[this.sortAttribute].localeCompare(commitment2[this.sortAttribute]);
-        } else if (this.sortAscending == false && (this.sortAttribute == "what" || this.sortAttribute == "who")) {
+        } else if (this.sortAscending == false && (this.sortAttribute == "what" || this.sortAttribute == "who") || this.sortAttribute == "status") {
             this.sortIcon = "v";
             return commitment2[this.sortAttribute].localeCompare(commitment1[this.sortAttribute]);
           }
@@ -225,6 +259,24 @@ var CommitmentsPage = {
         }
 
         }.bind(this));
+      },
+      commitmentCount: function(){
+        var count = 0;
+        this.commitments.forEach(function(commitment){
+          if (commitment.status == "Committed"){
+            count++;
+          }
+
+        }.bind(this));
+        var message = "";
+        if (count >= 5){
+          message = "Be wary of over committing! "
+          this.showWarning = true;
+        } else {
+          this.showWarning = false;
+        }
+        return message + "Current Commitments: " + count;
+        
       }
     }
 };
