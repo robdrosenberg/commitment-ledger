@@ -140,9 +140,12 @@
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCommitmentModal">
         Create Commitment
       </button>
-
+      <br>
+      <br>
       <div class="form-group">
-        <button class="btn btn-primary" v-on:click="categoryFilter = '1'"> Personal</button>
+        <button class="btn btn-primary" v-on:click="categoryFilter = ''">All</button>
+        <button class="btn btn-primary" v-on:click="categoryFilter = '1'">Personal</button>
+        <button class="btn btn-primary" v-on:click="categoryFilter = '2'">Work</button>
         <!-- <label for="category_filter">Category Filter</label> -->
         <!-- <select v-model="categoryFilter" id="category_filter" class="form-control">
           <option value="">All</option>
