@@ -142,31 +142,32 @@
       </button>
 
       <div class="form-group">
-        <label for="category_filter">Category Filter</label>
-        <select v-model="categoryFilter" id="category_filter" class="form-control">
+        <button class="btn btn-primary" v-on:click="categoryFilter = '1'"> Personal</button>
+        <!-- <label for="category_filter">Category Filter</label> -->
+        <!-- <select v-model="categoryFilter" id="category_filter" class="form-control">
           <option value="">All</option>
           <option value="1">Personal</option>
           <option value="2">Work</option>
-        </select>
+        </select> -->
       </div>
       
       <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <p v-on:click="setSortAttribute()"><strong>What</strong></p>
+            <p v-on:click="setSortAttribute('what')"><strong>What</strong> <span v-if="sortAttribute == 'what'">{{sortIcon}}</span></p>
           </div>
           <div class="col-md-2">
-            <p><strong>Who</strong></p>
+            <p v-on:click="setSortAttribute('who')"><strong>Who</strong> <span v-if="sortAttribute == 'who'">{{sortIcon}}</span></p>
           </div>
           <div class="col-md-2">
-            <p><strong>Due</strong></p>
+            <p v-on:click="setSortAttribute('due')"><strong>Due</strong> <span v-if="sortAttribute == 'due'">{{sortIcon}}</span> </p>
           </div>
           <div class="col-md-2">
             <p><strong>Category</strong></p>
           </div>
         </div>
       </div>
-      <div v-for="commitment in commitments" v-if="categoryCommitments(commitment)">
+      <div v-for="commitment in sortedCommitments" v-if="categoryCommitments(commitment)">
         <br>
         <div class="container">
         <div class="row">

@@ -104,6 +104,9 @@ var CommitmentsPage = {
       },
       currentCommitment: {},
       categoryFilter: "",
+      sortAttribute: "what",
+      sortAscending: true,
+      sortIcon: "",
       errors: []
     };
   },
@@ -111,8 +114,6 @@ var CommitmentsPage = {
     axios.get("/commitments").then(function(response){
       this.commitments = response.data;
       console.log(response.data);
-      var now = moment();
-      console.log(now);
     }.bind(this));
   },
   methods: {
@@ -177,13 +178,55 @@ var CommitmentsPage = {
       } else{
         return (commitment.category_id == this.categoryFilter);
       }
+    },
+
+    setSortAttribute: function(attribute){
+      if(attribute !== this.sortAttribute){
+        this.sortAscending = true;
+      } else {
+        this.sortAscending = !this.sortAscending;
+      }
+
+      this.sortAttribute = attribute;
     }
   },
   computed: {
     sortedCommitments: function(){
-      
+      return this.commitments.sort(function(commitment1, commitment2){
+        if (this.sortAscending && (this.sortAttribute == "what" || this.sortAttribute == "who")){
+          this.sortIcon = "^";
+          return commitment1[this.sortAttribute].localeCompare(commitment2[this.sortAttribute]);
+        } else if (this.sortAscending == false && (this.sortAttribute == "what" || this.sortAttribute == "who")) {
+            this.sortIcon = "v";
+            return commitment2[this.sortAttribute].localeCompare(commitment1[this.sortAttribute]);
+          }
+
+        if (this.sortAscending && this.sortAttribute == "due"){
+          this.sortIcon = "^";
+          console.log(commitment1.due);
+          
+          if(commitment1.due > commitment2.due){
+            return 1;
+          } else if (commitment1.due < commitment2.due) {
+            return -1;
+          } else {
+            return 0;
+          }
+          
+        } else {
+          this.sortIcon = "v";
+          if(commitment2.due > commitment1.due){
+            return 1;
+          } else if (commitment2.due < commitment1.due) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+
+        }.bind(this));
+      }
     }
-  }
 };
 
 var ProfilePage = {
