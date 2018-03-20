@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   has_many :commitments
+  has_many :people
   attr_reader :avatar_remote_url
   has_attached_file :avatar, styles: { medium: "300x300#", thumb: "100x100>" }, default_url: "/images/:style/missing.png", :default_style => :medium
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/

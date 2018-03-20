@@ -1,6 +1,8 @@
 class Commitment < ApplicationRecord
   belongs_to :user
   belongs_to :category
+  has_many :commitment_people
+  has_many :people, through: :commitment_people
 
   validates :what, presence: true
 
