@@ -1,0 +1,2 @@
+class CommitmentPerson < ApplicationRecord
+end
