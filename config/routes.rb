@@ -16,4 +16,13 @@ Rails.application.routes.draw do
   post "/commitments" => "commitments#create"
   put "/commitments/:id" => "commitments#update"
   delete "/commitments/:id" => "commitments#destroy"
+
+  get "/commitment_people" => "commitment_people#index"
+  post "/commitment_people" => "commitment_people#create"
+  delete "/commitment_people/:id" => "commitment_people#destroy"
+
+  resources :people
+
+
+  
 end

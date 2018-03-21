@@ -26,4 +26,7 @@ CommitmentPerson.create!([
   {
     commitment_id: 1, person_id: 1
   },
+  {
+    commitment_id: 2, person_id: 2
+  }
 ])
