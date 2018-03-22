@@ -353,6 +353,116 @@ var ProfilePage = {
   computed: {}
 };
 
+var PeopleIndexPage = {
+  template: "#people-index-page",
+  data: function() {
+    return {
+      message: "Your People",
+      people: [],
+      newPerson: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        description: ""
+      },
+      errors: []
+    };
+  },
+  created: function() {
+    axios.get("/people").then(function(response){
+      this.people = response.data;
+      console.log(response.data);
+    }.bind(this));
+  },
+
+  methods: {
+    addPerson: function(){
+      var params = {
+        
+        first_name: this.newPerson.first_name,
+        last_name: this.newPerson.last_name,
+        email: this.newPerson.email,
+        phone: this.newPerson.phone,
+        description: this.newPerson.description
+      };
+      axios.post("/people", params).then(function(response){
+        console.log(response.data);
+        this.people.push(response.data);
+        this.newPerson.first_name = "";
+        this.newPerson.last_name = "";
+        this.newPerson.email = "";
+        this.newPerson.phone_number = "";
+        this.newPerson.description = "";
+      }.bind(this)).catch(function(error){
+        this.errors = error.response.data.errors;
+      }.bind(this));
+    },
+  deletePerson: function(person){
+      var id = person.id;
+      console.log("deleted " + id);
+      axios.delete("/people/"+ id).then(function(response){
+        var index = this.people.indexOf(person);
+        this.people.splice(index,1);
+      }.bind(this));
+    },
+  },
+  computed: {}
+};
+
+var PersonShowPage = {
+  template: "#person-show-page",
+  data: function() {
+    return {
+      person: {},
+      errors: []
+    };
+  },
+  created: function() {
+    axios.get("/people/" + this.$route.params.id).then(function(response){
+      this.person = response.data;
+    }.bind(this));
+  },
+  methods: {
+    personUploadFile: function(event){
+      if (event.target.files.length>0) {
+        var formData = new FormData();
+        formData.append("avatar", event.target.files[0]);
+        axios.put("/people/" + this.person.id, formData).then(function(response){
+          console.log(response);
+          event.target.value = "";
+        }.bind(this)).catch(function(error){
+          this.errors = error.response.data.errors;
+          console.log(this.errors)
+        });
+      }
+    },
+    deletePerson: function(person){
+      var id = person.id;
+      console.log("deleted " + id);
+      axios.delete("/people/"+ id).then(function(response){
+        router.push("/people")
+      }.bind(this));
+    },
+    updatePerson: function(person){
+      var params = {
+        first_name: this.person.first_name,
+        last_name: this.person.last_name,
+        phone_number: this.person.phone_number,
+        email: this.person.email,
+        description: this.person.description
+      };
+      console.log(params);
+      axios.put("/people/" + this.person.id, params).then(function(response){
+        console.log(response.data);
+      }.bind(this)).catch(function(error){
+        this.errors = error.response.data.errors;
+      }.bind(this));
+    },
+  },
+  computed: {}
+};
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
@@ -361,6 +471,8 @@ var router = new VueRouter({
     { path: "/logout", component: LogoutPage},
     { path: "/commitments", component: CommitmentsPage},
     { path: "/profile", component: ProfilePage},
+    { path: "/people", component: PeopleIndexPage},
+    { path: "/people/:id", component: PersonShowPage}
 
     // { path: "/commitments/:id/edit", component: CommitmentsPage}
   ],

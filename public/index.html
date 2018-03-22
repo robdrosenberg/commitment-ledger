@@ -31,6 +31,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/#/commitments">Commitments<span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/#/people">People<span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Account
@@ -449,6 +452,161 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</template>
+
+<template id="people-index-page">
+  <div class="vue-component">
+    <div class="container">
+      <h1>{{message}}</h1>
+      
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPersonModal">
+        New Person
+      </button>
+
+      <div v-for="person in people">
+        <hr>
+        <p>Avatar: <img :src="person.avatar" alt=""></p>
+        <p>Name: {{person.first_name}} {{person.last_name}}</p>
+        <p>Description: {{person.description}}</p>
+        <p>Email: {{person.email}}</p>
+        <p>Brownie Points: {{person.brownies}}</p>
+        <a class="btn btn-primary" :href="'/#/people/' + person.id" >View</a>
+        <button class="btn btn-secondary btn-small" v-on:click="deletePerson(person)">Delete</button>
+
+      </div>
+
+      <!-- Create Person Modal -->
+      <div class="modal fade" id="createPersonModal" tabindex="-1" role="dialog" aria-labelledby="createPersonModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="createPersonModalLongTitle">New Person</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="first_name">First Name:</label>
+                  <input v-model="newPerson.first_name" id="first_name" type="text" class="form-control">
+
+                  <label for="last_name">Last Name:</label>
+                  <input v-model="newPerson.last_name" id="last_name" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input v-model="newPerson.email" id="email" type="email" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="phone">Phone:</label>
+                  <input v-model="newPerson.phone_number" id="phone" type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <textarea v-model="newPerson.description" id="description" type="text" class="form-control" rows="3"></textarea>
+                </div>
+                <div v-for="error in errors">
+                  <p>{{ error }}</p>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" v-on:click="addPerson()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<template id="person-show-page">
+  <div class="vue-component">
+    <div class="container">
+      <h1>{{person.first_name}} {{person.last_name}}</h1>
+      <p>Avatar:</p>
+      <img :src="person.avatar" alt="">
+      
+      <p>Upload Avatar: <input type="file" class="form-control" v-on:change="personUploadFile($event)"></p>
+
+      <p>Phone: {{person.phone_number}}</p>
+      <p>Email: {{person.email}}</p>
+      <p>Description: {{person.description}}</p>
+      <p>Brownie Points: {{person.brownies}}</p>
+
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePersonModal">
+      Update
+      </button>
+
+      <button class="btn btn-secondary btn-small" v-on:click="deletePerson(person)">Delete</button>
+
+      <div class="modal fade" id="updatePersonModal" tabindex="-1" role="dialog" aria-labelledby="updatePersonModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="updatePersonModalLongTitle">{{person.first_name}} {{person.last_name}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
+                    <label>First Name</label> 
+                    <input type="text" class="form-control" v-model="person.first_name">
+                  </div>
+                  <div class="col">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" v-model="person.last_name">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <div class="col">
+                    <label>Phone</label>
+                    <input type="text" class="form-control" v-model="person.phone_number">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <div class="col">
+                    <label>Email:</label>
+                    <input type="email" class="form-control" v-model="person.email">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group">
+                  <div class="col">
+                    <label>Description</label>
+                    <input type="textarea" class="form-control" v-model="person.description">     
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <ul>
+                    <li v-for="error in errors">{{error}}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updatePerson(person)">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </template>
