@@ -5,11 +5,17 @@ class Person < ApplicationRecord
   has_many :commitment_people
   has_many :commitments, through: :commitment_people
   
+  # def calculate_brownies
+  #   count = self.commitments.where(status).count
+    
+  # end
+
   def as_json
     {
       id: id,
       first_name: first_name,
       last_name: last_name,
+      name: "#{first_name} #{last_name}",
       phone_number: phone_number,
       email: email,
       description: description,

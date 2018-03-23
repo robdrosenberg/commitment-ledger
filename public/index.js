@@ -94,6 +94,7 @@ var CommitmentsPage = {
     return {
       message: "All Your Commitments",
       commitments: [],
+      people: [],
       newCommitment: {
         what: "",
         who: "",
@@ -126,9 +127,17 @@ var CommitmentsPage = {
       this.countCommitments = count;
       console.log(this.countCommitments);
     }.bind(this));
+    axios.get("/people").then(function(response){
+      this.people = response.data;
+      console.log(this.people)
+    }.bind(this));
   },
   methods: {
     addCommitment: function(){
+      var shownVal= document.getElementById("person_name").value;
+      var valForParams=document.querySelector("#names option[value='"+shownVal+"']").dataset.value;
+      console.log(shownVal);
+      console.log(valForParams);
       var params = {
         
         what: this.newCommitment.what,
@@ -137,17 +146,32 @@ var CommitmentsPage = {
         notes: this.newCommitment.notes,
         category_id: this.newCommitment.category_id
       };
+
+
+      // this.people.indexOf(params['who'])
+        
+      // }.bind(this));
       axios.post("/commitments", params).then(function(response){
         console.log(response.data);
+        commitment = response.data;
+        var new_id = commitment.id;
         this.commitments.push(response.data);
         this.newCommitment.what = "";
         this.newCommitment.who = "";
         this.newCommitment.due = "";
         this.newCommitment.notes = "";
         this.newCommitment.category_id = "";
+        var people_params = {
+          commitment_id: new_id,
+          person_id: valForParams
+        }
+        axios.post("/commitment_people", people_params).then(function(response){
+          console.log(response.data)
+        }.bind(this));
       }.bind(this)).catch(function(error){
         this.errors = error.response.data.errors;
       }.bind(this));
+      
     },
     deleteCommitment: function(commitment){
       var id = commitment.id;
