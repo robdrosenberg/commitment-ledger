@@ -129,11 +129,12 @@ var CommitmentsPage = {
     }.bind(this));
     axios.get("/people").then(function(response){
       this.people = response.data;
-      console.log(this.people)
+      console.log(this.people);
     }.bind(this));
   },
   methods: {
     addCommitment: function(){
+      console.log(people);
       var shownVal= document.getElementById("person_name").value;
       var valForParams=document.querySelector("#names option[value='"+shownVal+"']").dataset.value;
       console.log(shownVal);
@@ -147,10 +148,6 @@ var CommitmentsPage = {
         category_id: this.newCommitment.category_id
       };
 
-
-      // this.people.indexOf(params['who'])
-        
-      // }.bind(this));
       axios.post("/commitments", params).then(function(response){
         console.log(response.data);
         commitment = response.data;
@@ -188,6 +185,10 @@ var CommitmentsPage = {
       console.log(this.currentCommitment.id);
     },
     updateCommitment: function(commitment){
+      var nameVal= document.getElementById("update_who").value;
+      var updatePersonVal=document.querySelector("#people_names option[value='"+nameVal+"']").dataset.value;
+      console.log(nameVal);
+      console.log(updatePersonVal);
       var params = {
         what: this.currentCommitment.what,
         who: this.currentCommitment.who,
@@ -198,9 +199,20 @@ var CommitmentsPage = {
       };
       console.log(params)
       axios.put("/commitments/" + commitment.id, params).then(function(response){
-        console.log(currentCommitment);
-        console.log(response.data)
+        console.log(this.currentCommitment);
+        console.log(response.data);
+        var updatedCommitment = response.data;
+        var update_id = updatedCommitment.id;
         // this.commitments.push(response.data);
+        var update_people_params = {
+          commitment_id: update_id,
+          person_id: updatePersonVal
+        }
+
+        axios.post("/commitment_people", update_people_params).then(function(response){
+          console.log(response.data);
+        }.bind(this));
+
       }).catch(function(error){
         this.errors = error.response.data.errors;
         console.log(this.errors);

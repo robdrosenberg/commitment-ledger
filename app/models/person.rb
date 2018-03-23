@@ -5,10 +5,19 @@ class Person < ApplicationRecord
   has_many :commitment_people
   has_many :commitments, through: :commitment_people
   
-  # def calculate_brownies
-  #   count = self.commitments.where(status).count
-    
-  # end
+  def calculate_brownies
+    # complete_count = self.commitments.where(status: "Complete").count
+    # broken
+    total_points = 0
+    self.commitments.each do |commitment|
+      if commitment.status == "Complete"
+        total_points += 10
+      elsif commitment.status == "Broken"
+        total_points -=20
+      end
+    end
+    return total_points
+  end
 
   def as_json
     {
@@ -20,7 +29,7 @@ class Person < ApplicationRecord
       email: email,
       description: description,
       avatar: avatar,
-      brownies: brownies,
+      brownies: calculate_brownies,
       user_id: user_id
     }    
   end  

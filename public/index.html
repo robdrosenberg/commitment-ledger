@@ -294,10 +294,26 @@
                   <input v-model="currentCommitment.what" id="what" type="text" class="form-control">
                 </div>
         
+                <!-- <div class="form-group">
+                  <label for="who">Who:</label>
+                  <input v-model="newCommitment.who" list="names" class="form-control" id="person_name">
+                  {{newCommitment.who}}
+
+                </div>
+
+                <datalist id="names">
+                  <option v-for="person in people" v-bind:data-value="person.id" :value="person.name"></option>
+                </datalist> -->
+
                 <div class="form-group">
                   <label for="who">Who:</label>
-                  <input v-model="currentCommitment.who" id="who" type="text" class="form-control">
+                  <input v-model="currentCommitment.who" list="people_names" class="form-control" id="update_who">
                 </div>
+                
+                <datalist id="people_names">
+                  <option v-for="person in people" v-bind:data-value="person.id" :value="person.name"></option>
+                </datalist>
+
                 <div class="form-group">
                   <label for="due">Due:</label>
                   <input v-model="currentCommitment.due" id="due" type="datetime-local" class="form-control">
