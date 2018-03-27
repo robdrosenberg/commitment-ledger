@@ -132,7 +132,7 @@ var CommitmentsPage = {
         if (commitment.status == "Committed"){
           count++;
         }
-      }.bind(this));
+      })
       this.countCommitments = count;
       console.log(this.countCommitments);
     }.bind(this));
