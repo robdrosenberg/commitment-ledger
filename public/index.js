@@ -1,4 +1,7 @@
 /* global Vue, VueRouter, axios */
+Vue.component('vue-multiselect', window.VueMultiselect.default)
+
+
 
 var HomePage = {
   template: "#home-page",
@@ -90,11 +93,17 @@ var LogoutPage = {
 
 var CommitmentsPage = {
   template: "#commitments-page",
+  components: {
+    Multiselect: window.VueMultiselect.default
+  },
   data: function() {
     return {
       message: "All Your Commitments",
       commitments: [],
+      value: [],
+      updateValue: [],
       people: [],
+      selected_people: [],
       newCommitment: {
         what: "",
         who: "",
@@ -134,11 +143,11 @@ var CommitmentsPage = {
   },
   methods: {
     addCommitment: function(){
-      console.log(people);
-      var shownVal= document.getElementById("person_name").value;
-      var valForParams=document.querySelector("#names option[value='"+shownVal+"']").dataset.value;
-      console.log(shownVal);
-      console.log(valForParams);
+      // console.log(people);
+      // var shownVal= document.getElementById("person_name").value;
+      // var valForParams=document.querySelector("#names option[value='"+shownVal+"']").dataset.value;
+      // console.log(shownVal);
+      // console.log(valForParams);
       var params = {
         
         what: this.newCommitment.what,
@@ -158,13 +167,23 @@ var CommitmentsPage = {
         this.newCommitment.due = "";
         this.newCommitment.notes = "";
         this.newCommitment.category_id = "";
-        var people_params = {
-          commitment_id: new_id,
-          person_id: valForParams
-        }
-        axios.post("/commitment_people", people_params).then(function(response){
-          console.log(response.data)
-        }.bind(this));
+
+        this.value.forEach(function(person){
+          var people_params = {
+            commitment_id: new_id,
+            person_id: person.id
+          }
+          axios.post("/commitment_people", people_params).then(function(response){
+            console.log(response.data)
+          }.bind(this));
+        })
+        // var people_params = {
+        //   commitment_id: new_id,
+        //   person_id: valForParams
+        // }
+        // axios.post("/commitment_people", people_params).then(function(response){
+        //   console.log(response.data)
+        // }.bind(this));
       }.bind(this)).catch(function(error){
         this.errors = error.response.data.errors;
       }.bind(this));
@@ -183,12 +202,21 @@ var CommitmentsPage = {
       console.log(commitment)
       console.log(commitment.due)
       console.log(this.currentCommitment.id);
+      this.selected_people = [];
+
+      this.updateValue = commitment.people;
+      this.people.forEach(function(person){
+        if (!this.updateValue.includes(person)) {
+          this.selected_people.push(person);
+        }
+      }.bind(this));
+      console.log(this.updateValue);
     },
     updateCommitment: function(commitment){
-      var nameVal= document.getElementById("update_who").value;
-      var updatePersonVal=document.querySelector("#people_names option[value='"+nameVal+"']").dataset.value;
-      console.log(nameVal);
-      console.log(updatePersonVal);
+      // var nameVal= document.getElementById("update_who").value;
+      // var updatePersonVal=document.querySelector("#people_names option[value='"+nameVal+"']").dataset.value;
+      // console.log(nameVal);
+      // console.log(updatePersonVal);
       var params = {
         what: this.currentCommitment.what,
         who: this.currentCommitment.who,
@@ -204,16 +232,20 @@ var CommitmentsPage = {
         var updatedCommitment = response.data;
         var update_id = updatedCommitment.id;
         // this.commitments.push(response.data);
-        var update_people_params = {
-          commitment_id: update_id,
-          person_id: updatePersonVal
-        }
 
-        axios.post("/commitment_people", update_people_params).then(function(response){
-          console.log(response.data);
+        this.updateValue.forEach(function(person){
+          var update_people_params = {
+            commitment_id: update_id,
+            person_id: person.id
+          }
+          axios.post("/commitment_people", update_people_params).then(function(response){
+            console.log(response.data);
+          }.bind(this));
         }.bind(this));
+        
 
-      }).catch(function(error){
+      }.bind(this)).catch(function(error){
+        console.log(error);
         this.errors = error.response.data.errors;
         console.log(this.errors);
       }.bind(this));
@@ -457,6 +489,7 @@ var PersonShowPage = {
   created: function() {
     axios.get("/people/" + this.$route.params.id).then(function(response){
       this.person = response.data;
+      console.log(this.person);
     }.bind(this));
   },
   methods: {
@@ -519,6 +552,22 @@ var router = new VueRouter({
 
 var app = new Vue({
   el: "#vue-app",
+  components: {
+    Multiselect: window.VueMultiselect.default
+  },
+  data: {
+    value: { language: 'JavaScript', library: 'Vue-Multiselect' },
+    options: [
+      { language: 'JavaScript', library: 'Vue.js' },
+      { language: 'JavaScript', library: 'Vue-Multiselect' },
+      { language: 'JavaScript', library: 'Vuelidate' }
+    ]
+  },
+  methods: {
+    customLabel (option) {
+      return `${option.library} - ${option.language}`
+    }
+  },
   router: router,
   created: function() {
     var jwt = localStorage.getItem("jwt");

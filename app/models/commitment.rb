@@ -16,7 +16,8 @@ class Commitment < ApplicationRecord
       status: status,
       category_id: category_id,
       category: category.as_json,
-      user_id: user_id
+      user_id: user_id,
+      people: people.as_json
 
     }
   end

@@ -1,6 +1,6 @@
 class Person < ApplicationRecord
   belongs_to :user
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png", :default_style => :medium
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "/images/:style/missing.png", :default_style => :thumb
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
   has_many :commitment_people
   has_many :commitments, through: :commitment_people
@@ -30,7 +30,8 @@ class Person < ApplicationRecord
       description: description,
       avatar: avatar,
       brownies: calculate_brownies,
-      user_id: user_id
+      user_id: user_id,
+      commitments: commitments.map{|commitment| commitment.attributes}
     }    
   end  
 
