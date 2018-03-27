@@ -33,6 +33,7 @@ class CommitmentsController < ApplicationController
     commitment.notes = params[:notes] || commitment.notes
     commitment.category_id = params[:category_id] || commitment.category_id
     if commitment.save
+      commitment.commitment_people.destroy_all
       render json: commitment.as_json
     else
       render json: {errors: commitment.errors.full_messages}, status: :bad_request

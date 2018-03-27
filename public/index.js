@@ -1,4 +1,7 @@
 /* global Vue, VueRouter, axios */
+Vue.component('vue-multiselect', window.VueMultiselect.default)
+
+
 
 var HomePage = {
   template: "#home-page",
@@ -90,10 +93,17 @@ var LogoutPage = {
 
 var CommitmentsPage = {
   template: "#commitments-page",
+  components: {
+    Multiselect: window.VueMultiselect.default
+  },
   data: function() {
     return {
       message: "All Your Commitments",
       commitments: [],
+      value: [],
+      updateValue: [],
+      people: [],
+      selected_people: [],
       newCommitment: {
         what: "",
         who: "",
@@ -126,9 +136,18 @@ var CommitmentsPage = {
       this.countCommitments = count;
       console.log(this.countCommitments);
     }.bind(this));
+    axios.get("/people").then(function(response){
+      this.people = response.data;
+      console.log(this.people);
+    }.bind(this));
   },
   methods: {
     addCommitment: function(){
+      // console.log(people);
+      // var shownVal= document.getElementById("person_name").value;
+      // var valForParams=document.querySelector("#names option[value='"+shownVal+"']").dataset.value;
+      // console.log(shownVal);
+      // console.log(valForParams);
       var params = {
         
         what: this.newCommitment.what,
@@ -137,17 +156,38 @@ var CommitmentsPage = {
         notes: this.newCommitment.notes,
         category_id: this.newCommitment.category_id
       };
+
       axios.post("/commitments", params).then(function(response){
         console.log(response.data);
+        commitment = response.data;
+        var new_id = commitment.id;
         this.commitments.push(response.data);
         this.newCommitment.what = "";
         this.newCommitment.who = "";
         this.newCommitment.due = "";
         this.newCommitment.notes = "";
         this.newCommitment.category_id = "";
+
+        this.value.forEach(function(person){
+          var people_params = {
+            commitment_id: new_id,
+            person_id: person.id
+          }
+          axios.post("/commitment_people", people_params).then(function(response){
+            console.log(response.data)
+          }.bind(this));
+        })
+        // var people_params = {
+        //   commitment_id: new_id,
+        //   person_id: valForParams
+        // }
+        // axios.post("/commitment_people", people_params).then(function(response){
+        //   console.log(response.data)
+        // }.bind(this));
       }.bind(this)).catch(function(error){
         this.errors = error.response.data.errors;
       }.bind(this));
+      
     },
     deleteCommitment: function(commitment){
       var id = commitment.id;
@@ -162,8 +202,21 @@ var CommitmentsPage = {
       console.log(commitment)
       console.log(commitment.due)
       console.log(this.currentCommitment.id);
+      this.selected_people = [];
+
+      this.updateValue = commitment.people;
+      this.people.forEach(function(person){
+        if (!this.updateValue.includes(person)) {
+          this.selected_people.push(person);
+        }
+      }.bind(this));
+      console.log(this.updateValue);
     },
     updateCommitment: function(commitment){
+      // var nameVal= document.getElementById("update_who").value;
+      // var updatePersonVal=document.querySelector("#people_names option[value='"+nameVal+"']").dataset.value;
+      // console.log(nameVal);
+      // console.log(updatePersonVal);
       var params = {
         what: this.currentCommitment.what,
         who: this.currentCommitment.who,
@@ -174,10 +227,25 @@ var CommitmentsPage = {
       };
       console.log(params)
       axios.put("/commitments/" + commitment.id, params).then(function(response){
-        console.log(currentCommitment);
-        console.log(response.data)
+        console.log(this.currentCommitment);
+        console.log(response.data);
+        var updatedCommitment = response.data;
+        var update_id = updatedCommitment.id;
         // this.commitments.push(response.data);
-      }).catch(function(error){
+
+        this.updateValue.forEach(function(person){
+          var update_people_params = {
+            commitment_id: update_id,
+            person_id: person.id
+          }
+          axios.post("/commitment_people", update_people_params).then(function(response){
+            console.log(response.data);
+          }.bind(this));
+        }.bind(this));
+        
+
+      }.bind(this)).catch(function(error){
+        console.log(error);
         this.errors = error.response.data.errors;
         console.log(this.errors);
       }.bind(this));
@@ -353,6 +421,117 @@ var ProfilePage = {
   computed: {}
 };
 
+var PeopleIndexPage = {
+  template: "#people-index-page",
+  data: function() {
+    return {
+      message: "Your People",
+      people: [],
+      newPerson: {
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        description: ""
+      },
+      errors: []
+    };
+  },
+  created: function() {
+    axios.get("/people").then(function(response){
+      this.people = response.data;
+      console.log(response.data);
+    }.bind(this));
+  },
+
+  methods: {
+    addPerson: function(){
+      var params = {
+        
+        first_name: this.newPerson.first_name,
+        last_name: this.newPerson.last_name,
+        email: this.newPerson.email,
+        phone: this.newPerson.phone,
+        description: this.newPerson.description
+      };
+      axios.post("/people", params).then(function(response){
+        console.log(response.data);
+        this.people.push(response.data);
+        this.newPerson.first_name = "";
+        this.newPerson.last_name = "";
+        this.newPerson.email = "";
+        this.newPerson.phone_number = "";
+        this.newPerson.description = "";
+      }.bind(this)).catch(function(error){
+        this.errors = error.response.data.errors;
+      }.bind(this));
+    },
+  deletePerson: function(person){
+      var id = person.id;
+      console.log("deleted " + id);
+      axios.delete("/people/"+ id).then(function(response){
+        var index = this.people.indexOf(person);
+        this.people.splice(index,1);
+      }.bind(this));
+    },
+  },
+  computed: {}
+};
+
+var PersonShowPage = {
+  template: "#person-show-page",
+  data: function() {
+    return {
+      person: {},
+      errors: []
+    };
+  },
+  created: function() {
+    axios.get("/people/" + this.$route.params.id).then(function(response){
+      this.person = response.data;
+      console.log(this.person);
+    }.bind(this));
+  },
+  methods: {
+    personUploadFile: function(event){
+      if (event.target.files.length>0) {
+        var formData = new FormData();
+        formData.append("avatar", event.target.files[0]);
+        axios.put("/people/" + this.person.id, formData).then(function(response){
+          console.log(response);
+          event.target.value = "";
+        }.bind(this)).catch(function(error){
+          this.errors = error.response.data.errors;
+          console.log(this.errors)
+        });
+      }
+    },
+    deletePerson: function(person){
+      var id = person.id;
+      console.log("deleted " + id);
+      axios.delete("/people/"+ id).then(function(response){
+        router.push("/people")
+      }.bind(this));
+    },
+    updatePerson: function(person){
+      var params = {
+        first_name: this.person.first_name,
+        last_name: this.person.last_name,
+        phone_number: this.person.phone_number,
+        email: this.person.email,
+        description: this.person.description
+      };
+      console.log(params);
+      axios.put("/people/" + this.person.id, params).then(function(response){
+        console.log(response.data);
+      }.bind(this)).catch(function(error){
+        this.errors = error.response.data.errors;
+      }.bind(this));
+    },
+  },
+  computed: {}
+};
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
@@ -361,6 +540,8 @@ var router = new VueRouter({
     { path: "/logout", component: LogoutPage},
     { path: "/commitments", component: CommitmentsPage},
     { path: "/profile", component: ProfilePage},
+    { path: "/people", component: PeopleIndexPage},
+    { path: "/people/:id", component: PersonShowPage}
 
     // { path: "/commitments/:id/edit", component: CommitmentsPage}
   ],
@@ -371,6 +552,22 @@ var router = new VueRouter({
 
 var app = new Vue({
   el: "#vue-app",
+  components: {
+    Multiselect: window.VueMultiselect.default
+  },
+  data: {
+    value: { language: 'JavaScript', library: 'Vue-Multiselect' },
+    options: [
+      { language: 'JavaScript', library: 'Vue.js' },
+      { language: 'JavaScript', library: 'Vue-Multiselect' },
+      { language: 'JavaScript', library: 'Vuelidate' }
+    ]
+  },
+  methods: {
+    customLabel (option) {
+      return `${option.library} - ${option.language}`
+    }
+  },
   router: router,
   created: function() {
     var jwt = localStorage.getItem("jwt");

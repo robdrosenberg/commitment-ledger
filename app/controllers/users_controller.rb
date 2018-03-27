@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       last_name: params[:last_name],
       bio: params[:bio],
       profile_picture: params[:profile_picture],
-      avatar: parmas[:avatar]
+      avatar: params[:avatar]
     )
     if user.save
       render json: {message: "User created succesfully"}, status: :created
