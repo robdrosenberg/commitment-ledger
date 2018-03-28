@@ -19,7 +19,8 @@ var SignupPage = {
   template: "#signup-page",
   data: function() {
     return {
-      name: "",
+      first_name: "",
+      last_name: "",
       email: "",
       password: "",
       passwordConfirmation: "",
@@ -161,7 +162,6 @@ var CommitmentsPage = {
         console.log(response.data);
         commitment = response.data;
         var new_id = commitment.id;
-        this.commitments.push(response.data);
         this.newCommitment.what = "";
         this.newCommitment.who = "";
         this.newCommitment.due = "";
@@ -177,6 +177,7 @@ var CommitmentsPage = {
             console.log(response.data)
           }.bind(this));
         })
+        this.commitments.push(response.data);
         // var people_params = {
         //   commitment_id: new_id,
         //   person_id: valForParams
@@ -552,22 +553,6 @@ var router = new VueRouter({
 
 var app = new Vue({
   el: "#vue-app",
-  components: {
-    Multiselect: window.VueMultiselect.default
-  },
-  data: {
-    value: { language: 'JavaScript', library: 'Vue-Multiselect' },
-    options: [
-      { language: 'JavaScript', library: 'Vue.js' },
-      { language: 'JavaScript', library: 'Vue-Multiselect' },
-      { language: 'JavaScript', library: 'Vuelidate' }
-    ]
-  },
-  methods: {
-    customLabel (option) {
-      return `${option.library} - ${option.language}`
-    }
-  },
   router: router,
   created: function() {
     var jwt = localStorage.getItem("jwt");

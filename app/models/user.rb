@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
   validates_attachment_file_name :avatar, matches: [/png\z/, /jpe?g\z/, /gif\z/]
   validates :email, presence: true, uniqueness: true
-  validates :user_name, presence: true, uniqueness: true
+  # validates :user_name, uniqueness: true
   def avatar_remote_url=(url_value)
     self.avatar = URI.parse(url_value)
     # Assuming url_value is http://example.com/photos/face.png
