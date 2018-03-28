@@ -467,7 +467,7 @@ var PeopleIndexPage = {
         first_name: this.newPerson.first_name,
         last_name: this.newPerson.last_name,
         email: this.newPerson.email,
-        phone: this.newPerson.phone,
+        phone_number: this.newPerson.phone_number,
         description: this.newPerson.description
       };
       axios.post("/people", params).then(function(response){
@@ -516,6 +516,7 @@ var PersonShowPage = {
         axios.put("/people/" + this.person.id, formData).then(function(response){
           console.log(response);
           event.target.value = "";
+          this.person = response.data;
         }.bind(this)).catch(function(error){
           this.errors = error.response.data.errors;
           console.log(this.errors)
@@ -540,7 +541,10 @@ var PersonShowPage = {
       console.log(params);
       axios.put("/people/" + this.person.id, params).then(function(response){
         console.log(response.data);
+        console.log("HELLO");
+        this.person = person;
       }.bind(this)).catch(function(error){
+        console.log(error);
         this.errors = error.response.data.errors;
       }.bind(this));
     },

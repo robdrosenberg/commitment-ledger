@@ -27,24 +27,24 @@
                 <div class="container">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="/#/">
-                          <h5>GoCommit</h5>
-                            <!-- <img alt="Wingman" src="assets/img/logo-white.svg" /> -->
+                          <img alt="Wingman" src="assets/img/go.commit-logotype-lg.png" class="logo">
                         </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <i class="icon-menu h4"></i>
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                             <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a href="/#/commitments" class="nav-link">Commitments</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="/#/people" class="nav-link">People</a>
-                                </li>
+                                
                             </ul>
 
 
                             <ul class="navbar-nav">
+                              <li class="nav-item">
+                                  <a href="/#/commitments" class="nav-link">Commitments</a>
+                              </li>
+                              <li class="nav-item">
+                                  <a href="/#/people" class="nav-link">People</a>
+                              </li>
                                 <li class="nav-item dropdown">
 
                                     <a class="nav-link dropdown-toggle" href="#" id="componentsDropdown" role="button" data-toggle="dropdown" v-on:click="userChange()">Account</a>
@@ -939,29 +939,29 @@
                  <div class="row">
                     <div class="col-2">
                       <div class="d-flex justify-content-start align-items-center mb-4">
-                        <button class="btn btn-primary" v-on:click="clearFilters()">All</button>
+                        <button class="btn btn-outline-primary" v-on:click="clearFilters()">All</button>
                         
                         
                       </div>
                     </div>
                     <div class="col">
                       <div class="d-flex justify-content-start align-items-center mb-4">
-                        <button class="btn btn-primary space" data-toggle="button" v-on:click="setCategoryFilter('1')">Personal</button>
-                        <button class="btn btn-secondary space" data-toggle="button" v-on:click="setCategoryFilter('2')">Work</button>
+                        <button class="btn btn-outline-primary space" data-toggle="button" v-on:click="setCategoryFilter('1')">Personal</button>
+                        <button class="btn btn-outline-secondary space" data-toggle="button" v-on:click="setCategoryFilter('2')">Work</button>
                       </div>
                     </div>
 
                     <div class="col">
                       <div class="d-flex justify-content-center align-items-center mb-4">
-                        <button class="btn btn-info space" data-toggle="button" v-on:click="setStatusFilter('Committed')">Committed</button>
-                        <button class="btn btn-success space" data-toggle="button" v-on:click="setStatusFilter('Complete')">Complete</button>
-                        <button class="btn btn-danger space" data-toggle="button" v-on:click="setStatusFilter('Broken')">Broken</button>
+                        <button class="btn btn-outline-info space" data-toggle="button" v-on:click="setStatusFilter('Committed')">Committed</button>
+                        <button class="btn btn-outline-success space" data-toggle="button" v-on:click="setStatusFilter('Complete')">Complete</button>
+                        <button class="btn btn-outline-danger space" data-toggle="button" v-on:click="setStatusFilter('Broken')">Broken</button>
                       </div>
                     </div>
                     <div class="col">
                         <div class="d-flex justify-content-end align-items-center mb-4">
                           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCommitmentModal">
-                            Add Commitment
+                            <i class="icon-light-bulb"></i> Add Commitment
                           </button>
                             <!-- <div>
                                 <span class="text-muted text-small">Results 1 - 8 of 8</span>
@@ -986,10 +986,10 @@
                         <table class="table table-borderless table-hover align-items-center">
                             <thead>
                                 <tr>
-                                    <th scope="col" v-on:click="setSortAttribute('what')"><strong>What</strong> <span v-if="sortIcon === 'down' && sortAttribute == 'what'" class="icon-triangle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'what'" class="icon-triangle-down"></span></th>
-                                    <th scope="col" v-on:click="setSortAttribute('who')"><strong>Who</strong><span v-if="sortIcon === 'down' && sortAttribute == 'who'" class="icon-triangle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'who'" class="icon-triangle-down"></span></th>
-                                    <th scope="col" v-on:click="setSortAttribute('due')"><strong>When</strong><span v-if="sortIcon === 'down' && sortAttribute == 'due'" class="icon-triangle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'due'" class="icon-triangle-down"></span></th>
-                                    <th scope="col" v-on:click="setSortAttribute('status')"><strong>Status</strong><span v-if="sortIcon === 'down' && sortAttribute == 'status'" class="icon-triangle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'status'" class="icon-triangle-down"></span></th>
+                                    <th scope="col" v-on:click="setSortAttribute('what')"><strong>What</strong> <span v-if="sortIcon === 'down' && sortAttribute == 'what'" class="icon-chevron-with-circle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'what'" class="icon-chevron-with-circle-down"></span></th>
+                                    <th scope="col" v-on:click="setSortAttribute('who')"><strong>Who</strong> <span v-if="sortIcon === 'down' && sortAttribute == 'who'" class="icon-chevron-with-circle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'who'" class="icon-chevron-with-circle-down"></span></th>
+                                    <th scope="col" v-on:click="setSortAttribute('due')"><strong>When</strong> <span v-if="sortIcon === 'down' && sortAttribute == 'due'" class="icon-chevron-with-circle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'due'" class="icon-chevron-with-circle-down"></span></th>
+                                    <th scope="col" v-on:click="setSortAttribute('status')"><strong>Status</strong> <span v-if="sortIcon === 'down' && sortAttribute == 'status'" class="icon-chevron-with-circle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'status'" class="icon-chevron-with-circle-down"></span></th>
                                     <th scope="col"><strong>Category</strong></th>
                                     <th scope="col"></th>
                                 </tr>
@@ -999,6 +999,7 @@
                                   <th scope="row" data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">
                                       <p class="media align-items-center">{{commitment.what}}</p>
                                   </th>
+                                  <!-- for adding avatar <img class="avatar avatar-xs" :src="person.avatar" alt=""> -->
                                   <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)" ><span v-for="person in commitment.people" class="badge badge-pill badge-primary">{{person.name}}</span></td>
                                   <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">{{commitment.due}}</td>
                                   <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">
@@ -1232,3 +1233,424 @@
   </div>
 </template>
 
+<template id="people-index-page">
+  <div class="vue-component">
+    <div class="main-container">
+        <section>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <h1 class="h2 mb-2">Your People</h1>
+                        <span>The foundation of who you commit to. Create new People or Update and view current ones</span>
+                    </div>
+                    <!--end of col-->
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </section>
+        <!--end of section-->
+        <section class="flush-with-above">
+            <div class="container">
+              <div class="row">
+                <div class="col">
+                  <div class="d-flex justify-content-begin align-items-center mb-4">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPersonModal">
+                    <i class="icon-add-user"></i> New Person
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+                <!-- <div class="row"> -->
+                    <!-- <div class="col">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <span class="text-muted text-small">Results 1 - 8 of 8</span>
+                            </div>
+                            <form class="d-flex align-items-center">
+                                <span class="mr-2 text-muted text-small text-nowrap">Sort by:</span>
+                                <select class="custom-select">
+                                    <option value="alpha">Alphabetical</option>
+                                    <option value="old-new" selected>Newest</option>
+                                    <option value="new-old">Oldest</option>
+                                    <option value="status">Status</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div> -->
+                    <!--end of col-->
+                <!-- </div> -->
+                <!--end of row-->
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-borderless table-hover align-items-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Brownie Points</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr class="spaceUnder" v-for="person in people" class="bg-white">
+                                        <th scope="row" class="w-25">
+                                            <a class="media align-items-center" href="#">
+                                                <img alt="Image" :src="person.avatar" class="avatar avatar-sm" />
+                                                <div class="media-body">
+                                                    <span class="h6 mb-0">{{person.name}}</span>
+                                                    <span class="text-muted">{{person.description}}</span>
+                                                </div>
+                                            </a>
+                                        </th>
+                                        <td>
+                                            <div class="progress progress-sm">
+                                                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated w-50" role="progressbar" aria-valuenow="person.brownies" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </td>
+                                        <td>{{person.email}}</td>
+                                        <td>
+                                          {{person.phone_number}}
+                                        </td>
+                                        <td>
+                                          <div>
+                                            <a :href="'/#/people/' + person.id" ><i class="icon-v-card"></i></a>
+                                            <button type="button" class="close" aria-label="Close" v-on:click="deletePerson(person)">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                        </td>
+                                        <!-- <td class="w-15">
+                                            <div class="dropdown">
+                                                <button class="btn btn-sm btn-outline-primary dropdown-toggle dropdown-toggle-no-arrow" type="button" id="dropdownMenuButton-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="icon-dots-three-horizontal"></i>
+                                                </button>
+                                                <div class="dropdown-menu dropdown-menu-sm" aria-labelledby="dropdownMenuButton">
+                                                    <a class="dropdown-item" href="#">Download</a>
+                                                    <a class="dropdown-item" href="#">Git Repo</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" href="#">Discussion <span class="badge badge-secondary">4</span></a>
+                                                </div>
+                                            </div>
+                                        </td> -->
+                                    </tr>
+                                    <tr class="table-divider"></tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--end of col-->
+                </div>
+                <div class="modal fade" id="createPersonModal" tabindex="-1" role="dialog" aria-labelledby="createPersonModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="createPersonModalLongTitle">New Person</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <form>
+                          <div class="form-group">
+                            <label for="first_name">First Name:</label>
+                            <input v-model="newPerson.first_name" id="first_name" type="text" class="form-control">
+
+                            <label for="last_name">Last Name:</label>
+                            <input v-model="newPerson.last_name" id="last_name" type="text" class="form-control">
+                          </div>
+                          <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input v-model="newPerson.email" id="email" type="email" class="form-control">
+                          </div>
+                          <div class="form-group">
+                            <label for="phone">Phone:</label>
+                            <input v-model="newPerson.phone_number" id="phone" type="tel" class="form-control">
+                          </div>
+                          <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea v-model="newPerson.description" id="description" type="text" class="form-control" rows="3"></textarea>
+                          </div>
+                          <div v-for="error in errors">
+                            <p>{{ error }}</p>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" v-on:click="addPerson()" data-dismiss="modal">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </section>
+        <!--end of section-->
+        <footer class="footer-short">
+            <div class="container">
+                <hr>
+                <nav class="row justify-content-between align-items-center">
+                    <div class="col-auto">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <img alt="Image" src="assets/img/logo-gray.svg" />
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Overview</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Documentation</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Changelog</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end of col-->
+                    <div class="col-auto text-sm-right">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#"><i class="socicon-twitter"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#"><i class="socicon-facebook"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end of col-->
+                </nav>
+                <!--end of row-->
+                <div class="row">
+                    <div class="col">
+                        <small>&copy; 2018 Medium Rare All Rights Reserved</small>
+                    </div>
+                    <!--end of col-->
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </footer>
+    </div>
+  </div>
+</template>
+
+<template id="person-show-page">
+  <div class="vue-component">
+    <div class="main-container">
+        <section class="bg-white">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8">
+                        <div class="media">
+                          <div class="col">
+                            <div class="row">
+                              <img alt="Image" :src="person.avatar" class="mr-md-5 avatar avatar-xlg">
+                            </div> 
+                          </div>
+                            <div class="media-body">
+                                <div class="mb-3">
+                                    <h1 class="h2 mb-2">{{person.name}}</h1>
+                                    <span class="text-muted">{{person.description}}</span>
+                                </div>
+                                <p>Email: {{person.email}}</p>
+                                <p>Phone: {{person.phone_number}}</p>
+                                <p>Brownie Points: {{person.brownies}}</p>
+                                <div class="progress progress-sm">
+                                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated w-50" role="progressbar" aria-valuenow="person.brownies" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <br>
+                                <div>
+                                  <a class="btn btn-outline-primary space" :href="`mailto:${person.email}`"><i class="icon-mail"></i>
+                                  </a>
+                                  <button class="btn btn-outline-primary space" data-toggle="modal" data-target="#updatePersonModal"><i class="icon-pencil"></i> Update</button>
+                                  <button class="btn btn-outline-danger" type="button" v-on:click="deletePerson(person)">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end of col-->
+
+                    <!-- PERSON UPDATE MODAL -->
+                    <div class="modal fade" id="updatePersonModal" tabindex="-1" role="dialog" aria-labelledby="updatePersonModalTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="updatePersonModalLongTitle">{{person.first_name}} {{person.last_name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col">
+                                  <label>First Name</label> 
+                                  <input type="text" class="form-control" v-model="person.first_name">
+                                </div>
+                                <div class="col">
+                                  <label>Last Name</label>
+                                  <input type="text" class="form-control" v-model="person.last_name">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group">
+                                <div class="col">
+                                  <label>Phone</label>
+                                  <input type="text" class="form-control" v-model="person.phone_number">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group">
+                                <div class="col">
+                                  <label>Email:</label>
+                                  <input type="email" class="form-control" v-model="person.email">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group">
+                                <div class="col">
+                                  <label>Description</label>
+                                  <input type="textarea" class="form-control" v-model="person.description">     
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <label class="custom-file mb-2" for="file3">Avatar Upload
+                                  <input type="file" id="file3" class="custom-file-input height-0" v-on:change="personUploadFile($event)">
+                                  <span class="btn btn-primary"><i class="icon-upload-to-cloud">&nbsp;</i>Upload</span>
+                                </label>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col">
+                                <ul>
+                                  <li v-for="error in errors">{{error}}</li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" v-on:click="updatePerson(person)">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </section>
+        <!--end of section-->
+        <section class="flush-with-above">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="projects" role="tabpanel" aria-labelledby="projects-tab">
+                    <div class="container">
+                      <h3 class="text-center">Commitments to {{person.name}}</h3>
+                      <table class="table table-borderless table-hover align-items-center">
+                          <thead>
+                              <tr>
+                                  <th scope="col"><strong>What</strong></th>
+                                  <!-- <th scope="col"><strong>Who</strong></th> -->
+                                  <th scope="col"><strong>When</strong></th>
+                                  <th scope="col"><strong>Status</strong></th>
+                                  <th scope="col"><strong>Category</strong></th>
+                                  <th scope="col"></th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr class="spaceUnder" v-for="commitment in person.commitments" class="bg-white">
+                                <th scope="row">
+                                    <p class="media align-items-center">{{commitment.what}}</p>
+                                </th>
+                                <!-- for adding avatar <img class="avatar avatar-xs" :src="person.avatar" alt=""> -->
+                                <!-- <td><span v-for="person in commitment.people" class="badge badge-pill badge-primary">{{person.name}}</span></td> -->
+                                <td>{{commitment.due}}</td>
+                                <td>
+                                    <span class="badge badge-pill badge-danger" v-if="commitment.status == 'Broken'">{{commitment.status}}</span>
+                                    <span class="badge badge-pill badge-info" v-else-if="commitment.status == 'Committed'">{{commitment.status}}</span>
+                                    <span class="badge badge-pill badge-success" v-else>{{commitment.status}}</span>
+
+                                </td>
+                                <td>
+                                  <p v-if="commitment.category_id === 1">Personal</p>
+                                  <p v-else>Work</p>
+                                  <!-- {{commitment.category_id}} -->
+                                </td>
+                                <tr class="table-divider"></tr>
+                              </tr>
+                              
+                              
+                          </tbody>
+                      </table>
+                      
+
+                    </div>
+                    <!--end of container-->
+                </div>
+
+            </div>
+        </section>
+        <!--end of section-->
+        <footer class="footer-short">
+            <div class="container">
+                <hr>
+                <nav class="row justify-content-between align-items-center">
+                    <div class="col-auto">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <img alt="Image" src="assets/img/logo-gray.svg" />
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Overview</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Documentation</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Changelog</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end of col-->
+                    <div class="col-auto text-sm-right">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#"><i class="socicon-twitter"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#"><i class="socicon-facebook"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end of col-->
+                </nav>
+                <!--end of row-->
+                <div class="row">
+                    <div class="col">
+                        <small>&copy; 2018 Medium Rare All Rights Reserved</small>
+                    </div>
+                    <!--end of col-->
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </footer>
+    </div>
+  </div>
+</template>

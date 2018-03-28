@@ -54,7 +54,7 @@
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
- 
+.icon-user-add:before { content: "\e700"; } /* '\e700' */
 .icon-add-to-list:before { content: '\e800'; } /* '' */
 .icon-add-user:before { content: '\e801'; } /* '' */
 .icon-address:before { content: '\e802'; } /* '' */
