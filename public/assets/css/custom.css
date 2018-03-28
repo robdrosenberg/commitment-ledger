@@ -6,3 +6,12 @@
 /*  in your page by adding a reference to assets/css/custom.css in the head of each page.
 /*
 */
+tr.spaceUnder>td {
+  padding-top: 1.5em;
+  padding-bottom: 1.5em;
+  /*margin-bottom: 50px !important;*/
+}
+
+.space {
+  margin-right: .5em;
+}

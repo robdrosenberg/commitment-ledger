@@ -11,7 +11,7 @@ class Commitment < ApplicationRecord
       id: id,
       who: who,
       what: what,
-      due: formatted_time(due),
+      due: due,
       notes: notes,
       status: status,
       category_id: category_id,
@@ -22,10 +22,10 @@ class Commitment < ApplicationRecord
     }
   end
 
-  def formatted_time(time)
-    if time
-      time.strftime("%m/%e/%Y, %l:%M %p")
-    end
-  end
+  # def formatted_time(time)
+  #   if time
+  #     time.strftime("%m/%e/%Y, %l:%M %p")
+  #   end
+  # end
 
 end

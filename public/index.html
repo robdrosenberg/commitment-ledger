@@ -10,6 +10,7 @@
         <link href="assets/css/socicon.css" rel="stylesheet" type="text/css" media="all" />
         <link href="assets/css/entypo.css" rel="stylesheet" type="text/css" media="all" />
         <link href="assets/css/theme.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="assets/css/custom.css" rel="stylesheet" type="text/css" media="all" />
         <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
         <script src="https://unpkg.com/vue/dist/vue.js"></script>
         <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
@@ -42,23 +43,25 @@
                                 </li>
                             </ul>
 
+
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="componentsDropdown" role="button" data-toggle="dropdown">Account</a>
+
+                                    <a class="nav-link dropdown-toggle" href="#" id="componentsDropdown" role="button" data-toggle="dropdown" v-on:click="userChange()">Account</a>
                                     <div class="dropdown-menu" aria-labelledby="componentsDropdown">
-
-                                        <a class="dropdown-item" href="/#/signup">Signup</a>
-
-                                        <a class="dropdown-item" href="/#/login">Login</a>
-                                        
+                                      <div v-if="user">
                                         <a class="dropdown-item" href="/#/logout">Logout</a>
 
                                         <a class="dropdown-item" href="/#/profile">Profile</a>
+                                      </div>
+                                      <div v-else>
+                                        <a class="dropdown-item" href="/#/signup">Signup</a>
 
+                                        <a class="dropdown-item" href="/#/login">Login</a>
+                                      </div>
                                     </div>
                                 </li>
                             </ul>
-
                         </div>
                         <!--end nav collapse-->
                     </nav>
@@ -508,9 +511,9 @@
                         <img alt="Image" src="assets/img/photo-man-diary.jpg" class="bg-image position-absolute opacity-30" />
                         <div class="col-12 col-sm-8 col-lg-9 text-center pt-5 pb-5">
                             <img alt="Image" src="assets/img/logo-white.svg" class="mb-4 logo-lg" />
-                            <span class="h3 mb-5">Build great products and join a community of happy designers</span>
+                            <span class="h3 mb-5">Don't let yourself or others down — fulfill your commitments, build trust, and be happier!</span>
 
-                            <div class="card text-left">
+                            <!-- <div class="card text-left">
                                 <div class="card-body">
                                     <div class="media">
                                         <img alt="Image" src="assets/img/avatar-female-2.jpg" class="avatar" />
@@ -522,7 +525,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                         <!--end of col-->
@@ -597,14 +600,14 @@
     <div class="main-container">
         <section class="space-sm">
             <div class="container align-self-start">
-                <div class="row mb-5">
-                    <div class="col text-center">
+                <!-- <div class="row mb-5"> -->
+                    <<!-- div class="col text-center">
                         <a href="#">
                             <img alt="Image" src="assets/img/logo-gray.svg" />
                         </a>
-                    </div>
+                    </div> -->
                     <!--end of col-->
-                </div>
+                <!-- </div> -->
                 <!--end of row-->
                 <div class="row justify-content-center">
                     <div class="col-12 col-md-8 col-lg-7">
@@ -618,12 +621,12 @@
                                   <li class="text-danger" v-for="error in errors">{{ error }}</li>
                                 </ul>
                                 <div class="row no-gutters justify-content-center">
-                                    <form class="text-left col-lg-8">
-                                        <div class="form-group">
+                                    <!-- <form class="text-left col-lg-8"> -->
+                                        <div class="form-group text-left col-lg-8">
                                             <label for="login-email">Email Address</label>
                                             <input v-model="email"class="form-control form-control-lg" type="email" name="email" id="login-email" placeholder="Email Address" />
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group text-left col-lg-8">
                                             <label for="login-password">Password</label>
                                             <input v-model="password" class="form-control form-control-lg" type="password" name="password" id="login-password" placeholder="Enter a password" />
                                             <!-- <small>Forgot password? <a href="#">Reset here</a>
@@ -635,16 +638,18 @@
                                                 <label class="custom-control-label text-small" for="check-remember">Remember me next time</label>
                                             </div>
                                         </div> -->
-                                        <div class="text-center mt-3">
-                                            <button type="submit" class="btn btn-lg btn-primary" v-on:click="submit()">Log in</button>
+                                        <div class="form-group text-left col-lg-8">
+                                          <div class="text-center mt-3">
+                                              <button type="submit" class="btn btn-lg btn-primary" v-on:click="submit()">Log in</button>
+                                          </div>
                                         </div>
-                                    </form>
+                                    <!-- </form> -->
                                 </div>
                                 <!--end of row-->
                             </div>
                         </div>
                         <div class="text-center">
-                            <span class="text-small">Don't have an account yet? <a href="#">Create one</a>
+                            <span class="text-small">Don't have an account yet? <a href="/#/signup">Create one</a>
                             </span>
                         </div>
                     </div>
@@ -682,7 +687,7 @@
                 <!--end of row-->
             <!-- </div> -->
             <!--end of container-->
-        </nav>
+        <!-- </nav> -->
         <!-- <section class="bg-white space-sm pb-4"> -->
             <!-- <div class="container"> -->
                 <!-- <div class="row justify-content-between align-items-center"> -->
@@ -727,13 +732,14 @@
                 <!--end of container-->
             <!-- </div>
         </section> -->
-        <section class="flush-with-above height-80 d-block">
+        <!-- <section class="flush-with-above height-80 d-block"> -->
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
                     
                     <div class="container">
-                      <h1>Your Profile</h1>
                       <br>
+                      
+                      <h1>Your Profile</h1>
                         <div class="row">
                             <div class="col-12">
                                 <div class="media flex-wrap mb-0 align-items-center">
@@ -762,7 +768,7 @@
                             <!--end of col-->
                         </div>
                         <!--end of row-->
-                        <div class="row">
+                        <!-- <div class="row"> -->
                             <!-- <div class="col-12 col-md-4 order-md-2">
                                 <div class="alert alert-info text-small" role="alert">
                                     <i class="icon-shield"></i>
@@ -821,13 +827,23 @@
                                         </ul>
                                       </div>
                                     </div>
-                                    <div class="col-12">
+                                    
                                       <br>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary" type="submit" v-on:click="updateUser(user)">Save changes</button>
-                                        </div>
-                                    </div>
+                                      
                                 </form>
+                                  <div class="row justify-content-md-center">
+                                    
+                                      <div class="col-md-4">
+                                        <button class="btn btn-primary" type="submit" v-on:click="updateUser(user)">Save changes</button>
+                                      </div>
+                                      <div class="col-md-4 offset-md-4">
+                                        <button class="btn btn-danger" v-on:click="deleteUser()">Delete User</button>
+                                      </div>
+                                        
+                                    
+                                </div>
+                                <br>
+                                <br>
                             </div>
                             <!--end of col-->
                         </div>
@@ -835,8 +851,337 @@
                 <!--end of tab pane-->
             </div>
             <!--end of tabs content-->
-        </section>
+        <!-- </section> -->
         <!--end of section-->
+        <footer class="footer-short">
+            <div class="container">
+                <hr>
+                <nav class="row justify-content-between align-items-center">
+                    <div class="col-auto">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#">
+                                    <img alt="Image" src="assets/img/logo-gray.svg" />
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Overview</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Documentation</a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#">Changelog</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end of col-->
+                    <div class="col-auto text-sm-right">
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <a href="#"><i class="socicon-twitter"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="#"><i class="socicon-facebook"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end of col-->
+                </nav>
+                <!--end of row-->
+                <div class="row">
+                    <div class="col">
+                        <small>&copy; 2018 Medium Rare All Rights Reserved</small>
+                    </div>
+                    <!--end of col-->
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </footer>
+    </div>
+  </div>
+</template>
+
+
+<template id="commitments-page">
+  <div class="vue-component">
+    <div class="main-container">
+        <section>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col">
+                        <h1 class="h2 mb-2">Your Commitments</h1>
+                        <span>Manage your commitments but make sure not to overcommit yourself!</span>
+                    </div>
+                    <!--end of col-->
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </section>
+
+
+          <div class="container">
+
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="showWarning == true">
+              <h3>Beware of Overcommitment!</h3>
+              <p>You're at risk of overcommitting yourself. Consider breaking or deleting some commitments that you feel you won't be able to complete.</p>
+              <p><strong>It's integral to your personal and professional success that you do not overcommit yourself.</strong></p>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        <!--end of section-->
+        <section class="flush-with-above">
+            <div class="container">
+                 <div class="row">
+                    <div class="col-2">
+                      <div class="d-flex justify-content-start align-items-center mb-4">
+                        <button class="btn btn-primary" v-on:click="clearFilters()">All</button>
+                        
+                        
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="d-flex justify-content-start align-items-center mb-4">
+                        <button class="btn btn-primary space" data-toggle="button" v-on:click="setCategoryFilter('1')">Personal</button>
+                        <button class="btn btn-secondary space" data-toggle="button" v-on:click="setCategoryFilter('2')">Work</button>
+                      </div>
+                    </div>
+
+                    <div class="col">
+                      <div class="d-flex justify-content-center align-items-center mb-4">
+                        <button class="btn btn-info space" data-toggle="button" v-on:click="setStatusFilter('Committed')">Committed</button>
+                        <button class="btn btn-success space" data-toggle="button" v-on:click="setStatusFilter('Complete')">Complete</button>
+                        <button class="btn btn-danger space" data-toggle="button" v-on:click="setStatusFilter('Broken')">Broken</button>
+                      </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-flex justify-content-end align-items-center mb-4">
+                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCommitmentModal">
+                            Add Commitment
+                          </button>
+                            <!-- <div>
+                                <span class="text-muted text-small">Results 1 - 8 of 8</span>
+                            </div> -->
+                            <!-- <form class="d-flex align-items-center">
+                                <span class="mr-2 text-muted text-small text-nowrap">Sort by:</span>
+                                <select class="custom-select">
+                                    <option value="alpha">Alphabetical</option>
+                                    <option value="old-new" selected>Newest</option>
+                                    <option value="new-old">Oldest</option>
+                                    <option value="status">Status</option>
+                                </select>
+                            </form> -->
+                        </div>
+                    </div>
+                    <!-- end of col -->
+                 </div>  
+                <!--end of row -->
+                <div class="row">
+                    <div class="col">
+                      <p>{{commitmentCount}}</p>
+                        <table class="table table-borderless table-hover align-items-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col" v-on:click="setSortAttribute('what')"><strong>What</strong> <span v-if="sortIcon === 'down' && sortAttribute == 'what'" class="icon-triangle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'what'" class="icon-triangle-down"></span></th>
+                                    <th scope="col" v-on:click="setSortAttribute('who')"><strong>Who</strong><span v-if="sortIcon === 'down' && sortAttribute == 'who'" class="icon-triangle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'who'" class="icon-triangle-down"></span></th>
+                                    <th scope="col" v-on:click="setSortAttribute('due')"><strong>When</strong><span v-if="sortIcon === 'down' && sortAttribute == 'due'" class="icon-triangle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'due'" class="icon-triangle-down"></span></th>
+                                    <th scope="col" v-on:click="setSortAttribute('status')"><strong>Status</strong><span v-if="sortIcon === 'down' && sortAttribute == 'status'" class="icon-triangle-up"></span><span v-else-if="sortIcon === 'up' && sortAttribute == 'status'" class="icon-triangle-down"></span></th>
+                                    <th scope="col"><strong>Category</strong></th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="spaceUnder" v-for="commitment in sortedCommitments" v-show="filterCommitments(commitment)" class="bg-white">
+                                  <th scope="row" data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">
+                                      <p class="media align-items-center">{{commitment.what}}</p>
+                                  </th>
+                                  <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)" ><span v-for="person in commitment.people" class="badge badge-pill badge-primary">{{person.name}}</span></td>
+                                  <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">{{commitment.due}}</td>
+                                  <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">
+                                      <span class="badge badge-pill badge-danger" v-if="commitment.status == 'Broken'">{{commitment.status}}</span>
+                                      <span class="badge badge-pill badge-info" v-else-if="commitment.status == 'Committed'">{{commitment.status}}</span>
+                                      <span class="badge badge-pill badge-success" v-else>{{commitment.status}}</span>
+
+                                  </td>
+                                  <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">
+                                    <span>{{commitment.category.title}}</span>
+                                  </td>
+                                  <td>
+                                      <div>
+                                          <a class="icon-pencil" aria-label="Close" data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">
+                                          </a>
+                                          <button type="button" class="close" aria-label="Close" v-on:click="deleteCommitment(commitment)">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                      </div>
+                                      
+                                  </td>
+                                  <tr class="table-divider"></tr>
+                                </tr>
+                                
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--end of col-->
+                </div>
+                <!--end of row-->
+            </div>
+            <!--end of container-->
+        </section>
+
+        <!-- CREATE MODAL -->
+        <div class="modal fade" id="createCommitmentModal" tabindex="-1" role="dialog" aria-labelledby="createCommitmentModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="createCommitmentModalLongTitle">New Commitment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="what">What:</label>
+                    <input v-model="newCommitment.what" id="what" type="text" class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="who">Who:</label>
+                    <!-- <input list="names" class="form-control" id="person_name"> -->
+                    <!-- {{newCommitment.who}} -->
+                    <div>
+                      <multiselect v-model="value" :options="people" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" :preserve-search="true" placeholder="Pick some" label="name" track-by="name" :preselect-first="true">
+                        <template slot="tag" slot-scope="props"><span class="custom__tag"><span>{{ props.option.name }} </span><span class="custom__remove" @click="props.remove(props.option)">❌</span></span></template>
+                      </multiselect>
+                      <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
+                    </div>
+
+                  </div>
+
+                  <!-- <datalist id="names">
+                    <option v-for="person in people" v-bind:data-value="person.id" :value="person.name"></option>
+                  </datalist> -->
+
+                  <div class="form-group">
+                    <label for="due">Due:</label>
+                    <input id="due" type="datetime-local" value="2017-06-01T08:30" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <textarea v-model="newCommitment.notes" id="notes" type="text" class="form-control" rows="3"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="category_id">Category ID:</label>
+                    <select v-model="newCommitment.category_id" id="category_id" type="text" class="form-control">
+                      <option value="1">Personal</option>
+                      <option value="2">Work</option>
+                    </select>
+                  </div>
+                  <div v-for="error in errors">
+                    <p>{{ error }}</p>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" v-on:click="addCommitment()" data-dismiss="modal">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end of create modal -->
+
+        <!-- UPDATE MODAL -->
+        <div class="modal fade" id="updateCommitmentModal" tabindex="-1" role="dialog" aria-labelledby="updateCommitmentModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="updateCommitmentModalLongTitle">Update Commitment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="what">What:</label>
+                    <input v-model="currentCommitment.what" id="what" type="text" class="form-control">
+                  </div>
+          
+                  <!-- <div class="form-group">
+                    <label for="who">Who:</label>
+                    <input v-model="newCommitment.who" list="names" class="form-control" id="person_name">
+                    {{newCommitment.who}}
+
+                  </div>
+
+                  <datalist id="names">
+                    <option v-for="person in people" v-bind:data-value="person.id" :value="person.name"></option>
+                  </datalist> -->
+
+                  <div class="form-group">
+                    <label for="who">Who:</label>
+                    <!-- <input v-model="currentCommitment.who" list="people_names" class="form-control" id="update_who"> -->
+                    <div>
+                      <!-- <label class="typo__label">Simple select / dropdown</label> -->
+                      <multiselect v-model="updateValue" :options="selected_people" :multiple="true" :close-on-select="false" :clear-on-select="false" :hide-selected="true" :preserve-search="true" placeholder="Pick some" label="name" track-by="name" :preselect-first="true">
+                        <template slot="tag" slot-scope="props"><span class="custom__tag"><span>{{ props.option.name }} </span><span class="custom__remove icon-cancel" @click="props.remove(props.option)">❌</span></span></template>
+                      </multiselect>
+                      <!-- <pre class="language-json"><code>{{ updateValue  }}</code></pre> -->
+                    </div>
+                  </div>
+
+                  <!-- <datalist id="people_names">
+                    <option v-for="person in people" v-bind:data-value="person.id" :value="person.name"></option>
+                  </datalist> -->
+
+                  <div class="form-group">
+                    <label for="due">Due:</label>
+                    <input v-model="currentCommitment.due" id="due" type="datetime-local" class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="notes">Notes:</label>
+                    <textarea v-model="currentCommitment.notes" id="notes" type="text" class="form-control" rows="3"></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select v-model="currentCommitment.status" id="status" class="form-control">
+                      
+                      <option value="Committed">Committed</option>
+                      <option value="Complete">Complete</option>
+                      <option value="Broken">Broken</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="category_id">Category ID:</label>
+                    <select v-model="currentCommitment.category_id" id="category_id" type="text" class="form-control">
+                      <option value="1">Personal</option>
+                      <option value="2">Work</option>
+                    </select>
+                  </div>
+                  <div v-for="error in errors">
+                    <p>{{ error }}</p>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" v-on:click="updateCommitment(currentCommitment)" data-dismiss="modal">Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--end of update modal-->
+
         <footer class="footer-short">
             <div class="container">
                 <hr>

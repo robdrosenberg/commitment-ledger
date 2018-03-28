@@ -133,7 +133,7 @@ var CommitmentsPage = {
         if (commitment.status == "Committed"){
           count++;
         }
-      })
+      }.bind(this));
       this.countCommitments = count;
       console.log(this.countCommitments);
     }.bind(this));
@@ -177,7 +177,18 @@ var CommitmentsPage = {
             console.log(response.data)
           }.bind(this));
         })
-        this.commitments.push(response.data);
+        axios.get("/commitments").then(function(response){
+            this.commitments = response.data
+            var count = this.countCommitments
+            console.log(count + "???");
+            if (count >= 5){
+              // message = "Be wary of over committing! "
+              this.showWarning = true;
+            } else {
+              this.showWarning = false;
+            }
+            // return "Current Commitments: " + count;
+          }.bind(this));
         // var people_params = {
         //   commitment_id: new_id,
         //   person_id: valForParams
@@ -241,6 +252,9 @@ var CommitmentsPage = {
           }
           axios.post("/commitment_people", update_people_params).then(function(response){
             console.log(response.data);
+          }.bind(this));
+          axios.get("/commitments").then(function(response){
+            this.commitments = response.data
           }.bind(this));
         }.bind(this));
         
@@ -313,15 +327,15 @@ var CommitmentsPage = {
     sortedCommitments: function(){
       return this.commitments.sort(function(commitment1, commitment2){
         if (this.sortAscending && (this.sortAttribute == "what" || this.sortAttribute == "who" || this.sortAttribute == "status")){
-          this.sortIcon = "^";
+          this.sortIcon = "up";
           return commitment1[this.sortAttribute].localeCompare(commitment2[this.sortAttribute]);
         } else if (this.sortAscending == false && (this.sortAttribute == "what" || this.sortAttribute == "who") || this.sortAttribute == "status") {
-            this.sortIcon = "v";
+            this.sortIcon = 'down';
             return commitment2[this.sortAttribute].localeCompare(commitment1[this.sortAttribute]);
           }
 
         if (this.sortAscending && this.sortAttribute == "due"){
-          this.sortIcon = "^";
+          this.sortIcon = 'up';
           console.log(commitment1.due);
           
           if(commitment1.due > commitment2.due){
@@ -333,7 +347,7 @@ var CommitmentsPage = {
           }
           
         } else {
-          this.sortIcon = "v";
+          this.sortIcon = "down";
           if(commitment2.due > commitment1.due){
             return 1;
           } else if (commitment2.due < commitment1.due) {
@@ -353,14 +367,15 @@ var CommitmentsPage = {
           }
 
         }.bind(this));
+        console.log("hello");
         var message = "";
         if (count >= 5){
-          message = "Be wary of over committing! "
+          // message = "Be wary of over committing! "
           this.showWarning = true;
         } else {
           this.showWarning = false;
         }
-        return message + "Current Commitments: " + count;
+        return "Current Commitments: " + count;
         
       }
     }
@@ -554,11 +569,25 @@ var router = new VueRouter({
 var app = new Vue({
   el: "#vue-app",
   router: router,
+  data: function(){
+    return {
+      user: {}
+    }
+  },
   created: function() {
     var jwt = localStorage.getItem("jwt");
     // console.log(jwt);
     if (jwt) {
       axios.defaults.headers.common["Authorization"] = jwt;
     }
+  },
+  methods: {
+    userChange: function(){
+      axios.get("/profile").then(function(response){
+        this.user = response.data;
+        console.log(this.user)
+      }.bind(this));
+    }
   }
+
 });
