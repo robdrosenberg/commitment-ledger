@@ -1,5 +1,7 @@
 # Commitment Ledger
 
+### ON CODE FREEZE
+
 This is the application I'll be creating for my Capstone project with Actualize.
 
 It's core focus is to help you protect your commitments. It does this by helping you track when, who and what you've committed to.
