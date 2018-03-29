@@ -18,3 +18,17 @@ tr.spaceUnder td {
 .bg-dark{
   background-color: #30404a !important;
 }
+
+.btn-primary {
+    background-color: #00664f !important;
+    border-color: #00664f !important;
+}
+.btn-primary:hover {
+    background-color: #00664f !important;
+    border-color: #00664f !important;
+}
+
+.badge-primary{
+  background-color: #00664f !important;
+    border-color: #00664f !important;
+}

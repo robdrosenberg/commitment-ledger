@@ -575,7 +575,8 @@ var app = new Vue({
   router: router,
   data: function(){
     return {
-      user: {}
+      user: {},
+      animate: true
     }
   },
   created: function() {
