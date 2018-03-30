@@ -160,14 +160,21 @@ var CommitmentsPage = {
 
       axios.post("/commitments", params).then(function(response){
         console.log(response.data);
+
         commitment = response.data;
+        this.countCommitments++;
+        if (this.countCommitments >= 5){
+          // message = "Be wary of over committing! "
+          this.showWarning = true;
+        } else {
+          this.showWarning = false;
+        }
         var new_id = commitment.id;
         this.newCommitment.what = "";
         this.newCommitment.who = "";
         this.newCommitment.due = "";
         this.newCommitment.notes = "";
         this.newCommitment.category_id = "";
-
         this.value.forEach(function(person){
           var people_params = {
             commitment_id: new_id,
@@ -176,7 +183,8 @@ var CommitmentsPage = {
           axios.post("/commitment_people", people_params).then(function(response){
             console.log(response.data)
           }.bind(this));
-        })
+          
+        });
         axios.get("/commitments").then(function(response){
             this.commitments = response.data
             var count = this.countCommitments
@@ -189,14 +197,9 @@ var CommitmentsPage = {
             }
             // return "Current Commitments: " + count;
           }.bind(this));
-        // var people_params = {
-        //   commitment_id: new_id,
-        //   person_id: valForParams
-        // }
-        // axios.post("/commitment_people", people_params).then(function(response){
-        //   console.log(response.data)
-        // }.bind(this));
+
       }.bind(this)).catch(function(error){
+        console.log(error);
         this.errors = error.response.data.errors;
       }.bind(this));
       
@@ -204,15 +207,19 @@ var CommitmentsPage = {
     deleteCommitment: function(commitment){
       var id = commitment.id;
       console.log("deleted " + id);
+
       axios.delete("/commitments/"+ id).then(function(response){
         var index = this.commitments.indexOf(commitment);
+        if (commitment.status === "Committed") {
+          this.countCommitments--;
+        }
         this.commitments.splice(index,1);
       }.bind(this));
     },
     setCurrentCommitment: function(commitment){
       this.currentCommitment = commitment;
-      console.log(commitment)
-      console.log(commitment.due)
+      console.log(commitment);
+      console.log(commitment.due);
       console.log(this.currentCommitment.id);
       this.selected_people = [];
 
@@ -237,7 +244,7 @@ var CommitmentsPage = {
         status: this.currentCommitment.status,
         category_id: this.currentCommitment.category_id
       };
-      console.log(params)
+      console.log("your" + params)
       axios.put("/commitments/" + commitment.id, params).then(function(response){
         console.log(this.currentCommitment);
         console.log(response.data);

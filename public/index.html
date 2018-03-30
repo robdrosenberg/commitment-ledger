@@ -89,7 +89,7 @@
                                 <a href="/#/">Home</a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#">Contact</a>
+                                <a href="mailto:robertdr85@gmail.com">Contact</a>
                             </li>
                         </ul>
                     </div>
@@ -97,10 +97,10 @@
                     <div class="col-auto text-sm-right">
                         <ul class="list-inline">
                             <li class="list-inline-item">
-                                <a href="#"><i class="socicon-linkedin"></i></a>
+                                <a href="https://www.linkedin.com/in/robdrosenberg/"><i class="socicon-linkedin"></i></a>
                             </li>
                             <li class="list-inline-item">
-                                <a href="#"><i class="socicon-github"></i></a>
+                                <a href="https://github.com/robdrosenberg"><i class="socicon-github"></i></a>
                             </li>
                         </ul>
                     </div>
@@ -201,7 +201,7 @@
                             <div class="col-12 col-md-6 col-lg-5 order-lg-1">
                                 <h5>Build Rapport with Your Friends and Colleagues</h5>
                                 <p>
-                                    We’ll keep tabs on your committed, complete, and broken commitments to people. So that way when you’re trying to decide who to commit to next you can check on these brownie points to help you decide.
+                                    We’ll keep tabs on the status of your commitments to people. That way when you’re deciding who to commit to you can check on their brownie points to help you decide.
                                 </p>
                             </div>
                             <!--end of col-->
@@ -590,7 +590,18 @@
 
 
           <div class="container">
-
+            <!-- <b-alert :show="dismissCountDown"
+                         dismissible
+                         variant="warning"
+                         @dismissed="dismissCountDown=0"
+                         @dismiss-count-down="countDownChanged">
+                  <p>This alert will dismiss after {{dismissCountDown}} seconds...</p>
+                  <b-progress variant="warning"
+                              :max="dismissSecs"
+                              :value="dismissCountDown"
+                              height="4px">
+                  </b-progress>
+                </b-alert> -->
             <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="showWarning == true">
               <h3>Beware of Overcommitment!</h3>
               <p>You're at risk of overcommitting yourself. Consider breaking or deleting some commitments that you feel you won't be able to complete.</p>
@@ -667,8 +678,10 @@
                                       <p class="media align-items-center">{{commitment.what}}</p>
                                   </th>
                                   <!-- for adding avatar <img class="avatar avatar-xs" :src="person.avatar" alt=""> -->
-                                  <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)" ><span v-for="person in commitment.people" class="badge badge-pill badge-primary">{{person.name}}</span></td>
+                                  <td><b-badge pill variant="primary" v-for="person in commitment.people" :key="person.id" :href="`/#/people/${person.id}`">{{person.name}}</b-badge></td>
+
                                   <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">{{commitment.due}}</td>
+
                                   <td data-toggle="modal" data-target="#updateCommitmentModal" v-on:click="setCurrentCommitment(commitment)">
                                       <span class="badge badge-pill badge-danger" v-if="commitment.status == 'Broken'">{{commitment.status}}</span>
                                       <span class="badge badge-pill badge-info" v-else-if="commitment.status == 'Committed'">{{commitment.status}}</span>
@@ -738,7 +751,7 @@
 
                   <div class="form-group">
                     <label for="due">Due:</label>
-                    <input id="due" type="datetime-local" value="2017-06-01T08:30" class="form-control">
+                    <input id="due" type="datetime-local" class="form-control" v-model="newCommitment.due">
                     <!-- <label class="control-label" for="date">Date</label>
                     <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text"/> -->
                   </div>
