@@ -8,6 +8,9 @@ class CommitmentsController < ApplicationController
   end
 
   def create
+    if params[:category_id] == ""
+      params[:category_id] = 1
+    end
     commitment = Commitment.new(
       what: params[:what],
       who: params[:who],
@@ -25,6 +28,7 @@ class CommitmentsController < ApplicationController
   end
 
   def update
+    # Time.new(params[:due])
     commitment = Commitment.find_by(id: params[:id])
     commitment.what = params[:what] || commitment.what
     commitment.who = params[:who] || commitment.who

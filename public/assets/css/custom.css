@@ -32,3 +32,14 @@ tr.spaceUnder td {
   background-color: #00664f !important;
     border-color: #00664f !important;
 }
+
+.btn-outline-primary{
+  border-color: #00664f !important;
+  color: #00664f !important;;
+}
+
+.btn-outline-primary:hover {
+  background-color: #00664f !important;
+    border-color: #00664f !important;
+    color: white !important;
+}
